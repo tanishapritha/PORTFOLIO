@@ -7,17 +7,19 @@ export const metadata: Metadata = {
   keywords: ["LLMs", "Transformers", "Full Stack", "AI Optimization", "GenAI", "Portfolio", "Machine Learning"],
 };
 
+import MathBackground from '@/components/MathBackground';
+
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body>
-        <div className="terminal-overlay"></div>
+        <MathBackground />
         {children}
       </body>
     </html>
-  );
+  )
 }

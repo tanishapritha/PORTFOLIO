@@ -137,8 +137,8 @@ const Hero = () => {
           position: relative;
           border-radius: 50%;
           overflow: hidden;
-          border: 2px solid rgba(59, 130, 246, 0.2);
-          box-shadow: 0 0 40px -10px rgba(59, 130, 246, 0.3);
+          border: 2px solid var(--accent-primary);
+          box-shadow: 0 0 40px -10px var(--accent-glow);
         }
 
         .profile-img {

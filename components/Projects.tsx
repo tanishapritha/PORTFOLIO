@@ -75,33 +75,15 @@ const Projects = () => {
           padding: 4rem 0;
         }
 
-        /* Horizontal Scroll Styles */
+        /* Vertical Grid Styles */
         .projects-scroll-container {
-          display: flex;
-          overflow-x: auto;
-          gap: 2rem;
-          padding-bottom: 2rem; /* Space for scrollbar */
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-        }
-
-        .projects-scroll-container::-webkit-scrollbar {
-          height: 6px;
-        }
-        
-        .projects-scroll-container::-webkit-scrollbar-track {
-           background: var(--bg-secondary);
-           border-radius: 4px;
-        }
-
-        .projects-scroll-container::-webkit-scrollbar-thumb {
-           background: var(--border-color);
-           border-radius: 4px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 3rem;
         }
 
         .project-card-wrapper {
-          min-width: 400px;
-          scroll-snap-align: start;
+          height: 100%;
         }
 
         .project-card {

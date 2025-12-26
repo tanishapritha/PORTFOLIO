@@ -1,18 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg-primary: #030712;
-  --bg-secondary: #0b101b;
-  /* Slightly richer dark */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #64748b;
-  --accent-primary: #3b82f6;
-  --accent-glow: rgba(59, 130, 246, 0.15);
-  --border-color: rgba(255, 255, 255, 0.08);
-  /* Much subtler border */
-  --card-bg: rgba(17, 24, 39, 0.7);
-  /* More transparent for glass effect */
+  --bg-primary: #121212;
+  /* Darker, cleaner grey/black */
+  --bg-secondary: #1e1e1e;
+  --text-primary: #fce7f3;
+  /* Soft pink-white for high contrast */
+  --text-secondary: #d1d5db;
+  /* Light grey */
+  --text-tertiary: #9ca3af;
+
+  --accent-primary: #fbcfe8;
+  /* Pastel pink */
+  --accent-secondary: #db2777;
+  /* Deep pink */
+  --accent-glow: rgba(244, 114, 182, 0.15);
+  --border-color: rgba(255, 255, 255, 0.1);
+
+  --card-bg: rgba(30, 30, 30, 0.6);
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --max-width: 1200px;
@@ -27,7 +32,6 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  /* Base size */
 }
 
 body {
@@ -37,9 +41,12 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+
+  /* Geometric Grid Background */
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
   background-attachment: fixed;
 }
 
@@ -55,7 +62,7 @@ a {
   padding: 0 2rem;
 }
 
-/* Typography & Layout */
+/* Typography */
 h1,
 h2,
 h3,
@@ -63,8 +70,7 @@ h4,
 h5 {
   font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: -0.03em;
-  /* Tighter headings for modern look */
+  letter-spacing: -0.02em;
 }
 
 .mono {
@@ -74,41 +80,40 @@ h5 {
 
 .section-title {
   font-size: 0.75rem;
-  /* Smaller, cleaner labels */
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--text-tertiary);
+  color: var(--accent-primary);
   margin-bottom: 2.5rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .section-title::after {
   content: "";
   height: 1px;
   flex-grow: 1;
-  background: linear-gradient(90deg, var(--border-color), transparent);
+  background: linear-gradient(90deg, var(--accent-primary), transparent);
+  opacity: 0.3;
 }
 
-/* Modern Glassy Card */
+/* Glassy Card */
 .ent-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  /* Softer corners */
+  border-radius: 4px;
+  /* Sharper geometric corners */
   padding: 2rem;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   position: relative;
-  overflow: hidden;
 }
 
 .ent-card:hover {
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: var(--accent-primary);
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 30px -10px rgba(244, 114, 182, 0.15);
 }
 
 /* Buttons */
@@ -117,10 +122,11 @@ h5 {
   align-items: center;
   gap: 0.6rem;
   padding: 0.8rem 1.6rem;
-  background: var(--text-primary);
-  /* White/Light background button is trendy */
-  color: var(--bg-primary);
-  border-radius: 8px;
+  background: var(--accent-primary);
+  color: #831843;
+  /* Dark pink text for contrast on branding */
+  border-radius: 4px;
+  /* Geometric */
   font-weight: 600;
   font-size: 0.9rem;
   transition: all 0.2s;
@@ -128,7 +134,7 @@ h5 {
 }
 
 .btn-primary:hover {
-  background: #e2e8f0;
+  background: #fdf2f8;
   transform: translateY(-1px);
 }
 
@@ -137,35 +143,35 @@ h5 {
   align-items: center;
   gap: 0.6rem;
   padding: 0.8rem 1.6rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 500;
   font-size: 0.9rem;
   transition: all 0.2s;
 }
 
 .btn-outline:hover {
-  border-color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
-/* Tech Badge */
+/* Chip / Badge */
 .tech-badge {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   padding: 0.3rem 0.8rem;
-  background: rgba(59, 130, 246, 0.08);
-  color: #60a5fa;
-  border-radius: 6px;
-  border: 1px solid rgba(59, 130, 246, 0.0);
-  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-radius: 0px;
+  /* Fully geometric */
+  border: 1px solid var(--border-color);
 }
 
 .tech-badge:hover {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--accent-primary);
+  background: rgba(244, 114, 182, 0.05);
 }
 
 @media (max-width: 768px) {

@@ -10,7 +10,7 @@ export const projects = [
             "Scalable architecture with async background workers and secure RBAC/JWT auth.",
             "End-to-end agentic workflows (ingestion → validation → audit logging).",
         ],
-        links: { github: "https://github.com/tanishapritha", live: "#" },
+        links: { github: "https://github.com/tanishapritha/invoice-compliance", live: "#" },
         hasImage: true
     },
     {
@@ -24,7 +24,7 @@ export const projects = [
             "Structured tool-calling and context propagation across modular agents.",
             "Model-agnostic provider layer with token optimization.",
         ],
-        links: { github: "https://github.com/tanishapritha", live: "#" },
+        links: { github: "https://github.com/tanishapritha/agentflow-backend", live: "#" },
         hasImage: true
     },
     {
@@ -37,7 +37,7 @@ export const projects = [
             "Fine-tuned DistilBERT on 10k+ legal QA pairs using LoRA (90% param reduction).",
             "Achieved 0.0001 validation loss via mixed-precision training (FP16).",
         ],
-        links: { github: "https://github.com/tanishapritha", live: "#" },
+        links: { github: "https://github.com/tanishapritha/indiclegalqa", live: "#" },
         hasImage: false
     }
 ];

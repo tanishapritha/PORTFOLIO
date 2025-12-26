@@ -35,8 +35,8 @@ const Contact = () => {
     {
       icon: <Code2 size={24} />,
       label: "LeetCode",
-      value: "leetcode.com/tanishapritha",
-      href: "https://leetcode.com/tanishapritha",
+      value: "leetcode.com/tpritha03",
+      href: "https://leetcode.com/tpritha03",
       color: "hover:text-yellow-500"
     },
     {

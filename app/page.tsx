@@ -1,17 +1,15 @@
 "use client";
-import Navbar from '@/components/Navbar';
+import SideNav from '@/components/SideNav';
 import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
-import SocialSidebar from '@/components/SocialSidebar';
 
 export default function Home() {
   return (
-    <main>
-      <Navbar />
-      <SocialSidebar />
+    <main style={{ paddingLeft: '80px' }}>
+      <SideNav />
       <Hero />
       <Experience />
       <Projects />
