@@ -1,5 +1,6 @@
 import SideNav from '@/components/SideNav';
 import MobileNav from '@/components/MobileNav';
+import MobileHeader from '@/components/MobileHeader';
 import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Projects from '@/components/Projects';
@@ -11,6 +12,7 @@ export default function Home() {
     <main className="main-content">
       <SideNav />
       <MobileNav />
+      <MobileHeader />
       <Hero />
       <Experience />
       <Projects />
