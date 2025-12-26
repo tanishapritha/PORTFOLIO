@@ -1,5 +1,5 @@
-"use client";
 import SideNav from '@/components/SideNav';
+import MobileNav from '@/components/MobileNav';
 import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Projects from '@/components/Projects';
@@ -8,8 +8,9 @@ import Contact from '@/components/Contact';
 
 export default function Home() {
   return (
-    <main style={{ paddingLeft: '80px' }}>
+    <main className="main-content">
       <SideNav />
+      <MobileNav />
       <Hero />
       <Experience />
       <Projects />
