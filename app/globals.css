@@ -69,13 +69,36 @@ a {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1.25rem;
+    padding: 0 1rem;
   }
 
   .main-content {
     padding-left: 0 !important;
-    padding-bottom: 80px;
-    /* Space for mobile nav */
+    padding-bottom: 70px;
+    /* Reduced bottom space */
+  }
+
+  /* Compacting Sections */
+  .section-pad {
+    padding: 3rem 0 !important;
+  }
+
+  /* Compacting Cards */
+  .ent-card {
+    padding: 1.5rem !important;
+  }
+
+  /* Typography Scaling */
+  h1 {
+    font-size: 2.25rem !important;
+  }
+
+  h2 {
+    font-size: 1.75rem !important;
+  }
+
+  p {
+    font-size: 0.95rem !important;
   }
 }
 
@@ -193,6 +216,6 @@ h5 {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
 }

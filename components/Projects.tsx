@@ -10,7 +10,7 @@ const Projects = () => {
       <div className="container">
         <h3 className="section-title mono">02 / FEATURED WORK</h3>
 
-        {/* Horizontal Scroll Container */}
+        {/* Vertical Grid Container */}
         <div className="projects-scroll-container">
           {projects.map((project, idx) => (
             <div key={idx} className="project-card-wrapper">
@@ -40,10 +40,14 @@ const Projects = () => {
                     <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="icon-action" aria-label="GitHub">
                       <Github size={18} />
                     </a>
-                    {project.links.live !== "#" && (
+                    {project.links.live !== "#" ? (
                       <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="icon-action" aria-label="Live Demo">
                         <ExternalLink size={18} />
                       </a>
+                    ) : (
+                      <span className="coming-soon-badge mono" title="Live Link Coming Soon">
+                        <ExternalLink size={14} /> Link Soon
+                      </span>
                     )}
                   </div>
                 </div>
@@ -64,6 +68,11 @@ const Projects = () => {
                   <h4 className="other-title">{work.title}</h4>
                 </div>
                 <p className="other-desc">{work.desc}</p>
+                <div className="other-actions">
+                  <a href={work.links.github} target="_blank" rel="noopener noreferrer" className="icon-action-small">
+                    <Github size={16} />
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -122,10 +131,13 @@ const Projects = () => {
           flex-grow: 1;
         }
 
+        .card-top {
+            margin-bottom: 0.5rem;
+        }
+
         .project-type {
           font-size: 0.7rem;
           color: var(--accent-primary);
-          margin-bottom: 0.5rem;
         }
 
         .project-title {
@@ -178,6 +190,18 @@ const Projects = () => {
           border-color: var(--border-color);
         }
 
+        .coming-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            padding: 0.4rem 0.6rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            cursor: help;
+        }
+
         /* Other Work Grid */
         .other-work-grid {
           display: grid;
@@ -188,13 +212,17 @@ const Projects = () => {
         .other-card {
            padding: 1.5rem;
            border: 1px solid var(--border-color);
-           border-radius: 8px;
+           border-radius: 4px;
            transition: all 0.2s;
+           display: flex;
+           flex-direction: column;
+           background: var(--card-bg);
+           backdrop-filter: blur(10px);
         }
 
         .other-card:hover {
-          background: var(--bg-secondary);
-          border-color: var(--text-tertiary);
+          border-color: var(--accent-primary);
+          transform: translateY(-2px);
         }
 
         .other-cat {
@@ -212,11 +240,29 @@ const Projects = () => {
         .other-desc {
           font-size: 0.9rem;
           color: var(--text-secondary);
+          margin-bottom: 1.5rem;
+          flex-grow: 1;
+        }
+
+        .other-actions {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .icon-action-small {
+            display: inline-flex;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .icon-action-small:hover {
+            color: var(--accent-primary);
         }
 
         @media (max-width: 600px) {
-          .project-card-link {
-            min-width: 85vw;
+          .project-card-wrapper {
+            height: auto;
           }
         }
       `}</style>

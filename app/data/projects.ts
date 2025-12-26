@@ -47,20 +47,24 @@ export const otherWork = [
         title: "TinyGPT Implementation",
         category: "LAB / MINI-PROJECT",
         desc: "Vanilla NumPy transformer implementation from scratch to understand attention mechanisms.",
+        links: { github: "#" }
     },
     {
         title: "Streamlit RL Agent",
         category: "LAB / MINI-PROJECT",
         desc: "Interactive visualizer for Proximal Policy Optimization (PPO) training loops.",
+        links: { github: "#" }
     },
     {
         title: "Understanding Attention",
         category: "BLOG",
         desc: "A deep dive into the mathematics of self-attention mechanics. (Coming Soon)",
+        links: { github: "#" }
     },
     {
         title: "System Design for RAG",
         category: "BLOG",
         desc: "Pattern and anti-patterns when scaling Retrieval Augmented Generation. (Coming Soon)",
+        links: { github: "#" }
     }
 ];

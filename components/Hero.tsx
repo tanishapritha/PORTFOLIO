@@ -182,6 +182,11 @@ const Hero = () => {
             order: 1;
             margin-bottom: 2rem;
           }
+          
+          .profile-image-container {
+              width: 200px;
+              height: 200px;
+          }
         }
       `}</style>
     </section>
