@@ -12,15 +12,13 @@ const Hero = () => {
           </h1>
 
           <h2 className="hero-title subtle">
-            Full-Stack GenAI Engineer
+            Mechanical Undergrad & Full-Stack AI Engineer
           </h2>
 
           <p className="hero-bio">
-            I love <strong>building</strong> and <strong>deconstructing</strong> complex systems.
-            <br />
-            My work sits at the intersection of deep learning (Transformers, RAG)
-            and shipping robust products. I don't just train models; I wrap them in
-            scalable full-stack apps that solve real problems.
+            Mechanical engineer bridging the gap between solutions and intelligence.
+            I build high-performance applications with <strong>Python</strong> and <strong>C++</strong>,
+            delivering efficient, AI-integrated solutions for complex engineering challenges.
           </p>
 
           <p className="hero-pitch subtle">
@@ -56,68 +54,50 @@ const Hero = () => {
           display: flex;
           align-items: center;
           padding-top: 6rem;
-          background: radial-gradient(circle at 60% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+          background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
         }
 
         .hero-container {
           display: grid;
           grid-template-columns: 1.2fr 0.8fr;
-          gap: 4rem;
+          gap: 6rem;
           align-items: center;
-        }
-
-        .profile-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.25rem 0.75rem;
-          background: rgba(59, 130, 246, 0.1);
-          color: var(--accent-primary);
-          border-radius: 100px;
-          font-size: 0.75rem;
-          margin-bottom: 2rem;
-        }
-
-        .pulse-dot {
-          width: 6px;
-          height: 6px;
-          background: var(--accent-primary);
-          border-radius: 50%;
-          animation: pulse 2s infinite;
         }
 
         .hero-name {
-          font-size: clamp(2.5rem, 5vw, 4rem);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          margin-bottom: 0.5rem;
+          font-size: clamp(3rem, 6vw, 5rem);
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: var(--text-primary);
         }
 
         .hero-title {
-          font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-          color: var(--text-secondary);
-          margin-bottom: 2rem;
-          font-weight: 400;
+          font-size: clamp(1.25rem, 2vw, 1.5rem);
+          color: var(--accent-primary);
+          margin-bottom: 2.5rem;
+          font-weight: 500;
+          font-family: var(--font-mono);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
         }
 
         .hero-bio {
-          font-size: 1.125rem;
-          line-height: 1.6;
-          margin-bottom: 1.5rem;
-          max-width: 600px;
+          font-size: 1.15rem;
+          line-height: 1.7;
+          margin-bottom: 2.5rem;
+          max-width: 650px;
+          color: var(--text-secondary);
         }
 
         .hero-bio strong {
-          color: var(--accent-primary);
+          color: var(--text-primary);
           font-weight: 500;
         }
 
         .hero-pitch {
-          font-size: 1rem;
-          color: var(--text-tertiary);
-          margin-bottom: 3rem;
-          max-width: 550px;
-          line-height: 1.6;
+          display: none; /* Merging into bio for minimalism */
         }
 
         .hero-actions {

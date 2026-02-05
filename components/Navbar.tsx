@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container nav-content">
         <a href="#" className="logo mono">
-          portfolio
+          PROJECTS
         </a>
 
         <div className="nav-links">
@@ -27,9 +27,9 @@ const Navbar = () => {
           height: 70px;
           display: flex;
           align-items: center;
-          background: rgba(3, 7, 18, 0.85);
+          background: rgba(10, 11, 14, 0.8);
           backdrop-filter: blur(12px);
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border-secondary);
         }
 
         .nav-content {
@@ -41,9 +41,10 @@ const Navbar = () => {
 
         .logo {
           font-weight: 700;
-          letter-spacing: -0.05em;
-          font-size: 1.1rem;
-          color: var(--text-primary);
+          letter-spacing: 0.1em;
+          font-size: 1rem;
+          color: var(--accent-primary);
+          text-transform: uppercase;
         }
 
         .nav-links {
