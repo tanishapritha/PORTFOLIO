@@ -1,28 +1,28 @@
 "use client";
 import React from 'react';
-import { User, Briefcase, Cpu, BookOpen, Send } from 'lucide-react';
+import { User, Briefcase, Cpu, Download, Send } from 'lucide-react';
 
 const MobileNav = () => {
-    const navItems = [
-        { href: "#", icon: <User size={20} />, label: "Home" },
-        { href: "#experience", icon: <Briefcase size={20} />, label: "Exp" },
-        { href: "#projects", icon: <Cpu size={20} />, label: "Work" },
-        { href: "#skills", icon: <BookOpen size={20} />, label: "Skills" },
-        { href: "#contact", icon: <Send size={20} />, label: "Contact" },
-    ];
+  const navItems = [
+    { href: "#", icon: <User size={20} />, label: "Home" },
+    { href: "#experience", icon: <Briefcase size={20} />, label: "Exp" },
+    { href: "#projects", icon: <Cpu size={20} />, label: "Work" },
+    { href: "/resume.pdf", icon: <Download size={20} />, label: "CV" },
+    { href: "#contact", icon: <Send size={20} />, label: "Contact" },
+  ];
 
-    return (
-        <nav className="mobile-nav">
-            <div className="mobile-nav-container">
-                {navItems.map((item, idx) => (
-                    <a key={idx} href={item.href} className="mobile-nav-item">
-                        <span className="mobile-icon">{item.icon}</span>
-                        <span className="mobile-label">{item.label}</span>
-                    </a>
-                ))}
-            </div>
+  return (
+    <nav className="mobile-nav">
+      <div className="mobile-nav-container">
+        {navItems.map((item, idx) => (
+          <a key={idx} href={item.href} className="mobile-nav-item">
+            <span className="mobile-icon">{item.icon}</span>
+            <span className="mobile-label">{item.label}</span>
+          </a>
+        ))}
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .mobile-nav {
           display: none;
           position: fixed;
@@ -73,8 +73,8 @@ const MobileNav = () => {
           }
         }
       `}</style>
-        </nav>
-    );
+    </nav>
+  );
 };
 
 export default MobileNav;

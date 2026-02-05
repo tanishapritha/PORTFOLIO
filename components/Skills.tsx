@@ -135,18 +135,6 @@ const Skills = () => {
           .skills-layout {
             grid-template-columns: 1fr;
           }
-          .skills-section-container {
-            flex-direction: column;
-            gap: 2rem;
-          }
-          .section-label {
-            writing-mode: horizontal-tb;
-            transform: none;
-            position: relative;
-            top: 0;
-            padding-top: 0;
-            margin-bottom: 1rem;
-          }
         }
       `}</style>
     </section>

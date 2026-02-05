@@ -169,7 +169,16 @@ Production AI is 20% prompts, 80% systems engineering.
                 "Reliability Layer: Exponential backoff retries for service failures.",
                 "Observability: Real-time React dashboard with full 'Lead Trace' audit logs."
             ],
-            technicalDeepDive: "Core challenge: AI reliability. Implemented 'Guarded AI' pattern—pydantic-validated JSON responses with 'general inquiry' fallback. If AI doesn't respond or API is down, system doesn't break. Lead keeps moving.",
+            technicalDeepDive: `
+## Async Lead Processing Architecture
+
+Automated lead ingestion and intent analysis system designed for scalability and failure-tolerance.
+
+![Inbound Leak Flow](/projects/inbound-lead-engine/inbound-flow.png)
+
+### Reliability Layer
+Core challenge: AI reliability. Implemented 'Guarded AI' pattern—pydantic-validated JSON responses with 'general inquiry' fallback. If AI doesn't respond or API is down, system doesn't break. Lead keeps moving.
+            `,
             impact: "Full-stack containerized environment. Zero ingestion wait-time. Automated state escalation for hard failures."
         },
         trendingKeywords: ["LLMOps", "System-Design", "Audit-Safe"],
@@ -177,7 +186,7 @@ Production AI is 20% prompts, 80% systems engineering.
             github: "https://github.com/tanishapritha/inbound-lead-engine",
             live: "#"
         },
-        hasImage: false
+        hasImage: true
     },
     {
         id: "local-rag-chroma",
@@ -330,7 +339,16 @@ Validated the model against 'Happy Path' deliveries—identifying customers who 
                 "Micro-Briefings: Real-time entity extraction from logs and assets.",
                 "Fluid UX: Motion-driven interface with Tailwind + Framer Motion."
             ],
-            technicalDeepDive: "'Privacy-First' RAG was the challenge. Instead of cloud DB, implemented browser-side search with Dexie.js. Offloading vector indices to client achieved sub-10ms retrieval. Sensitive briefs never leave user's machine.",
+            technicalDeepDive: `
+## Browser-Side RAG & Real-time Intelligence
+
+'Privacy-First' RAG was the challenge. Instead of cloud DB, implemented browser-side search with Dexie.js. Offloading vector indices to client achieved sub-10ms retrieval. Sensitive briefs never leave user's machine.
+
+![Cross Document Verification](/projects/meet-me/cross-doc-check.png)
+
+### Real-time Context Injection
+By monitoring transcription streams, the system proactively fetches documents relevant to the current conversation pulse without manual search.
+            `,
             impact: "Low-latency platform with proactive context injection. No compromise on enterprise data sovereignty."
         },
         trendingKeywords: ["Browser-RAG", "Local-First", "Vectordb"],
@@ -338,7 +356,7 @@ Validated the model against 'Happy Path' deliveries—identifying customers who 
             github: "https://github.com/tanishapritha/meetme",
             live: "#"
         },
-        hasImage: false
+        hasImage: true
     },
     {
         id: "invoice-compliance",

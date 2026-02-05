@@ -38,7 +38,7 @@ const Projects = () => {
           <div className="side-label mono">PROJECTS</div>
           <div className="project-section-content">
             <header className="projects-header">
-              <h1 className="hero-name project-headline">Technical Solutions</h1>
+              <h1 className="hero-name project-headline">Projects</h1>
               <p className="subtitle">Architectures and full-stack implementations.</p>
             </header>
 
@@ -329,26 +329,39 @@ const Projects = () => {
           position: fixed; top: 0; right: 0; width: 60%; height: 100vh;
           background: #0a0a0a; border-left: 1px solid var(--border-color);
           z-index: 2001; transform: translateX(100%);
-          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: -20px 0 50px rgba(0,0,0,0.5);
         }
         .detail-drawer.open { transform: translateX(0); }
 
-        @media (max-width: 1024px) { .detail-drawer { width: 85%; } }
-        @media (max-width: 600px) { .detail-drawer { width: 100%; } .projects-minimal-grid { grid-template-columns: 1fr; } .project-headline { font-size: 2.5rem; } }
+        @media (max-width: 1024px) { 
+          .detail-drawer { width: 85%; } 
+          .projects-minimal-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        }
+        @media (max-width: 600px) { 
+          .detail-drawer { width: 100%; border-left: none; } 
+          .projects-minimal-grid { grid-template-columns: 1fr; } 
+          .project-headline { font-size: 2.2rem; } 
+        }
 
-        .drawer-inner { height: 100%; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; }
+        .drawer-inner { height: 100%; display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         .drawer-inner::-webkit-scrollbar { display: none; }
 
         .drawer-close-btn { 
           display: flex; align-items: center; gap: 0.75rem; padding: 2.5rem 4rem; 
           background: transparent; border: none; color: var(--text-tertiary); 
           cursor: pointer; transition: color 0.2s;
+          font-family: var(--font-mono); font-size: 0.75rem;
         }
         .drawer-close-btn:hover { color: var(--accent-primary); }
 
         .drawer-content { padding: 0 5rem 6rem; max-width: 900px; }
-        @media (max-width: 600px) { .drawer-content { padding: 0 2rem 4rem; } .drawer-close-btn { padding: 2rem; } }
+        @media (max-width: 768px) { 
+          .drawer-content { padding: 0 1.5rem 8rem; } 
+          .drawer-close-btn { padding: 1.5rem; } 
+          .drawer-header { margin-bottom: 2.5rem; }
+          .drawer-title { font-size: 2.2rem; }
+        }
 
         .drawer-header { margin-bottom: 4rem; }
         .drawer-meta { color: var(--accent-primary); font-size: 0.8rem; margin-bottom: 1rem; opacity: 0.7; }

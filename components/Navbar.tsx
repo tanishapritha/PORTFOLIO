@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="nav-links">
           <a href="#experience" className="nav-item">Experience</a>
           <a href="#projects" className="nav-item">Projects</a>
-          <a href="#skills" className="nav-item">Skills</a>
+          <a href="/resume.pdf" target="_blank" className="nav-item">CV</a>
           <a href="#contact" className="btn-outline btn-sm">Contact</a>
         </div>
       </div>

@@ -124,9 +124,16 @@ const Experience = () => {
         }
 
         @media (max-width: 768px) {
+          .experience-card {
+            padding: 1.5rem;
+          }
           .exp-header {
             flex-direction: column;
             gap: 1rem;
+            align-items: flex-start;
+          }
+          .exp-duration {
+            font-size: 0.8rem;
           }
         }
       `}</style>

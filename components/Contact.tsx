@@ -196,20 +196,9 @@ const Contact = () => {
         }
 
         @media (max-width: 900px) {
-          .contact-section-container {
-            flex-direction: column;
-            gap: 2rem;
-          }
           .contact-grid {
             grid-template-columns: 1fr;
             gap: 4rem;
-          }
-          .section-label {
-            writing-mode: horizontal-tb;
-            transform: none;
-            position: relative;
-            top: 0;
-            padding-top: 0;
           }
         }
       `}</style>
