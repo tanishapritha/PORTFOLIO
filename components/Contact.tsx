@@ -155,14 +155,7 @@ const Contact = () => {
           box-shadow: 0 10px 20px -10px var(--accent-glow);
         }
 
-        .icon-box {
-          color: var(--accent-primary);
-          transition: transform 0.2s;
-        }
 
-        .contact-card:hover .icon-box {
-          color: var(--text-primary);
-        }
 
         .link-info {
           display: flex;
@@ -182,6 +175,22 @@ const Contact = () => {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          color: var(--text-secondary);
+          transition: color 0.2s;
+        }
+
+        .contact-card:hover .link-value {
+          color: var(--text-primary);
+        }
+
+        .icon-box {
+          color: var(--text-tertiary);
+          transition: all 0.2s;
+        }
+
+        .contact-card:hover .icon-box {
+          color: var(--accent-primary);
+          transform: scale(1.1);
         }
 
         .footer-bar {
