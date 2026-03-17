@@ -8,6 +8,20 @@ const inter = Inter({
   display: "swap",
 });
 
+import { Playfair_Display, Lora } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "AI Engineer | Transformers & LLMs Enthusiast",
   description: "Portfolio of a Full Stack AI Engineer specialized in LLMs, Transformers, and GenAI Optimization. Mechanical Undergrad building the next generation of AI apps.",
@@ -23,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${playfair.variable} ${lora.variable} font-sans`}>
         <MathBackground />
         {children}
       </body>

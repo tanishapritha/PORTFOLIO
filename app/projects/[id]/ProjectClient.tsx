@@ -1,187 +1,403 @@
 "use client";
 import React from 'react';
 import { projects } from '@/app/data/projects';
-import { ArrowLeft, Github, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Github, ExternalLink, ShieldCheck, Zap, Layers, Cpu, Globe } from 'lucide-react';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ProjectClientProps {
-  id: string; // Receive simple ID prop
-  project: typeof projects[0]; // Receive the resolved project object
+  id: string;
+  project: typeof projects[0];
 }
 
 export default function ProjectClient({ id, project }: ProjectClientProps) {
-  // If no project is passed (should be handled by parent), return null or error
   if (!project) return null;
 
   return (
     <main className="project-detail">
       <div className="container">
-        <Link href="/#projects" className="back-link mono accent-hover">
-          <ArrowLeft size={16} /> Back to Arena
-        </Link>
+        <header className="page-header">
+          <Link href="/#projects" className="back-breadcrumb">
+            <ArrowLeft size={16} /> Back to Projects
+          </Link>
 
-        <header className="detail-header">
-          <div className="project-meta mono">{project.type}</div>
-          <h1 className="project-title">{project.title}</h1>
+          <div className="header-grid">
+            <div className="title-area">
+              <span className="project-category mono">{project.type}</span>
+              <h1 className="project-title-serif">{project.title}</h1>
+              <p className="impact-statement">{project.story.impact}</p>
+            </div>
 
-          <div className="tech-stack-detail">
-            {project.tech.map(t => (
-              <span key={t} className="tech-badge large">{t}</span>
-            ))}
-          </div>
-
-          <div className="detail-actions">
-            <a href={project.links.github} className="btn-primary" target="_blank" rel="noopener noreferrer">
-              <Github size={18} /> View Code
-            </a>
-            {project.links.live !== "#" && (
-              <a href={project.links.live} className="btn-outline" target="_blank" rel="noopener noreferrer">
-                <ExternalLink size={18} /> Live Demo
+            <div className="quick-actions">
+              <a href={project.links.github} className="btn-professional primary" target="_blank" rel="noopener noreferrer">
+                <Github size={18} /> Source Code
               </a>
-            )}
+              {project.links.live !== "#" && (
+                <a href={project.links.live} className="btn-professional outline" target="_blank" rel="noopener noreferrer">
+                  <ExternalLink size={18} /> View Live
+                </a>
+              )}
+            </div>
           </div>
         </header>
 
-        {project.hasImage && (
-          <div className="project-hero-image">
-            <div className="placeholder-text mono">
-              {`[IMG: ${project.id}_screenshot_01.png]`}
-            </div>
+        <div className="main-grid">
+          <div className="content-side">
+            <section className="summary-card">
+              <div className="card-header">
+                <ShieldCheck className="accent-icon" />
+                <h2>Executive Summary</h2>
+              </div>
+              <div className="narrative">
+                <div className="problem-statement">
+                  <h3>The Challenge</h3>
+                  <p>{project.story.problem}</p>
+                </div>
+                <div className="solution-statement">
+                  <h3>The Strategic Solution</h3>
+                  <p>{project.story.solution}</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="deep-dive-area">
+              <div className="card-header">
+                <Cpu className="accent-icon" />
+                <h2>Technical Implementation</h2>
+              </div>
+              <div className="markdown-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {project.story.technicalDeepDive}
+                </ReactMarkdown>
+              </div>
+            </section>
           </div>
-        )}
 
-        <div className="detail-content">
-          <section className="content-block">
-            <h2 className="block-title">Overview</h2>
-            <p className="block-text">{project.desc}</p>
-            <p className="block-text">
-              Detailed case study and architectural deep dive coming soon.
-              This section will cover the challenges faced during implementation,
-              specific design decisions regarding the {project.tech[0]} backend,
-              and performance metrics.
-            </p>
-          </section>
+          <aside className="sidebar">
+            <div className="sidebar-block sticky-stats">
+              <h3>Core Tech Stack</h3>
+              <div className="tech-pills">
+                {project.tech.map(t => (
+                  <span key={t} className="tech-pill">{t}</span>
+                ))}
+              </div>
+            </div>
 
-          <section className="content-block">
-            <h2 className="block-title">Key Implementations</h2>
-            <ul className="detail-list">
-              {project.story.architecture.map((step, idx) => (
-                <li key={idx}>{step}</li>
-              ))}
-            </ul>
-          </section>
+            <div className="sidebar-block">
+              <h3>Architecture Highlights</h3>
+              <ul className="arch-list">
+                {project.story.architecture.map((step, idx) => (
+                  <li key={idx}>
+                    <span className="idx">{idx + 1}</span>
+                    <span className="text">{step}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="sidebar-block">
+              <h3>Trending & Keywords</h3>
+              <div className="keyword-cloud">
+                {project.trendingKeywords.map(k => (
+                  <span key={k} className="keyword-tag">#{k}</span>
+                ))}
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
 
       <style jsx>{`
         .project-detail {
-          padding: 4rem 0;
+          padding: 6rem 0;
           min-height: 100vh;
-          background: var(--bg-primary);
+          background-color: var(--bg-primary);
+          color: var(--text-primary);
         }
 
-        .back-link {
-          display: inline-flex;
+        .page-header {
+          margin-bottom: 4rem;
+          border-bottom: 1px solid var(--border-color);
+          padding-bottom: 3rem;
+        }
+
+        .back-breadcrumb {
+          display: flex;
           align-items: center;
           gap: 0.5rem;
-          color: var(--text-secondary);
-          margin-bottom: 3rem;
+          color: var(--text-tertiary);
+          text-decoration: none;
           font-size: 0.9rem;
+          margin-bottom: 2rem;
+          transition: color 0.2s;
         }
 
-        .accent-hover:hover {
+        .back-breadcrumb:hover {
           color: var(--accent-primary);
         }
 
-        .detail-header {
-          margin-bottom: 4rem;
+        .header-grid {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 2rem;
+          align-items: flex-end;
         }
 
-        .project-meta {
+        .project-category {
+          display: block;
+          font-size: 0.8rem;
           color: var(--accent-primary);
           margin-bottom: 1rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.2em;
         }
 
-        .project-title {
-          font-size: clamp(2.5rem, 5vw, 4rem);
+        .project-title-serif {
+          font-family: var(--font-serif);
+          font-size: clamp(2.5rem, 5vw, 4.5rem);
           line-height: 1.1;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
+          font-weight: 700;
+          color: #fff;
         }
 
-        .tech-stack-detail {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-          margin-bottom: 2.5rem;
+        .impact-statement {
+          font-family: var(--font-body);
+          font-size: 1.25rem;
+          color: var(--text-secondary);
+          max-width: 800px;
+          line-height: 1.6;
         }
 
-        .tech-badge.large {
-          font-size: 0.9rem;
-          padding: 0.4rem 1rem;
-        }
-
-        .detail-actions {
+        .quick-actions {
           display: flex;
           gap: 1rem;
         }
 
-        .project-hero-image {
-          width: 100%;
-          height: 400px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--border-color);
-          border-radius: 12px;
+        .btn-professional {
+          padding: 0.8rem 1.5rem;
+          border-radius: 6px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          margin-bottom: 4rem;
+          gap: 0.75rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-decoration: none;
+          transition: all 0.3s ease;
         }
 
-        .placeholder-text {
+        .btn-professional.primary {
+          background: #fff;
+          color: #000;
+        }
+
+        .btn-professional.primary:hover {
+          background: #e2e8f0;
+          transform: translateY(-2px);
+        }
+
+        .btn-professional.outline {
+          border: 1px solid var(--border-color);
+          color: #fff;
+        }
+
+        .btn-professional.outline:hover {
+          border-color: var(--accent-primary);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .main-grid {
+          display: grid;
+          grid-template-columns: 1fr 340px;
+          gap: 4rem;
+        }
+
+        .content-side {
+          display: flex;
+          flex-direction: column;
+          gap: 4rem;
+        }
+
+        .card-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .card-header h2 {
+          font-family: var(--font-serif);
+          font-size: 1.75rem;
+          margin: 0;
+        }
+
+        .accent-icon {
+          color: var(--accent-primary);
+        }
+
+        .summary-card {
+          background: var(--bg-tertiary);
+          padding: 3rem;
+          border-radius: 16px;
+          border: 1px solid var(--border-color);
+        }
+
+        .narrative {
+          display: grid;
+          gap: 2.5rem;
+        }
+
+        .narrative h3 {
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
           color: var(--text-tertiary);
+          margin-bottom: 1rem;
+          font-family: var(--font-inter);
         }
 
-        .detail-content {
-          max-width: 800px;
-        }
-
-        .content-block {
-          margin-bottom: 4rem;
-        }
-
-        .block-title {
-          font-size: 1.5rem;
-          margin-bottom: 1.5rem;
-          color: var(--text-primary);
-        }
-
-        .block-text {
-          font-size: 1.1rem;
-          line-height: 1.7;
+        .narrative p {
+          font-family: var(--font-body);
+          font-size: 1.15rem;
+          line-height: 1.8;
           color: var(--text-secondary);
+        }
+
+        .markdown-content {
+          font-family: var(--font-body);
+          font-size: 1.1rem;
+          line-height: 1.8;
+          color: var(--text-secondary);
+        }
+
+        .markdown-content :global(h2) {
+          font-family: var(--font-serif);
+          color: #fff;
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          font-size: 1.5rem;
+        }
+
+        .markdown-content :global(h3) {
+          color: var(--text-primary);
+          margin-top: 1.5rem;
+          margin-bottom: 0.75rem;
+          font-size: 1.2rem;
+        }
+
+        .markdown-content :global(p) {
           margin-bottom: 1.5rem;
         }
 
-        .detail-list {
+        .markdown-content :global(pre) {
+          background: #000;
+          padding: 1.5rem;
+          border-radius: 12px;
+          overflow-x: auto;
+          border: 1px solid var(--border-color);
+          margin: 1.5rem 0;
+        }
+
+        .markdown-content :global(code) {
+          font-family: var(--font-mono);
+          font-size: 0.9rem;
+        }
+
+        .markdown-content :global(ul) {
+          margin-bottom: 1.5rem;
+          padding-left: 1.5rem;
+        }
+
+        .markdown-content :global(li) {
+          margin-bottom: 0.5rem;
+        }
+
+        .sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+        }
+
+        .sidebar-block {
+          border-top: 1px solid var(--border-color);
+          padding-top: 2rem;
+        }
+
+        .sidebar-block h3 {
+          font-size: 0.85rem;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: var(--text-tertiary);
+          margin-bottom: 1.5rem;
+        }
+
+        .tech-pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .tech-pill {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid var(--border-color);
+          padding: 0.4rem 0.8rem;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+        }
+
+        .arch-list {
           list-style: none;
           padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
         }
 
-        .detail-list li {
-          position: relative;
-          padding-left: 1.5rem;
-          margin-bottom: 1rem;
-          font-size: 1.1rem;
+        .arch-list li {
+          display: flex;
+          gap: 1rem;
+          font-size: 0.95rem;
           color: var(--text-secondary);
+          line-height: 1.5;
         }
 
-        .detail-list li::before {
-          content: "▹";
-          position: absolute;
-          left: 0;
+        .idx {
           color: var(--accent-primary);
+          font-family: var(--font-mono);
+          font-weight: 700;
+          font-size: 0.8rem;
+          opacity: 0.5;
+        }
+
+        .keyword-cloud {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .keyword-tag {
+          font-size: 0.8rem;
+          color: var(--text-tertiary);
+          font-family: var(--font-mono);
+        }
+
+        @media (max-width: 1024px) {
+          .main-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .header-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .quick-actions {
+            justify-content: flex-start;
+          }
+
+          .sidebar {
+            order: -1;
+          }
         }
       `}</style>
     </main>

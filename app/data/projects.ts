@@ -25,10 +25,10 @@ export const projects: Project[] = [
         title: "AI Compliance Audit Engine",
         type: "Multi-Agent AI / LegalTech",
         tech: ["FastAPI", "PostgreSQL", "pgvector", "GPT-4", "Docker", "Next.js"],
-        desc: "Reducing 60-hour legal audits to 2 minutes using multi-agent AI orchestration for India's DPDP Act 2023.",
+        desc: "Automating legal compliance audits for the Indian DPDP Act 2023 using a high-fidelity multi-agent AI system.",
         story: {
-            problem: "Legal teams spend 40-60 hours auditing privacy policies for DPDP Act compliance. Non-compliance penalties reach ₹250 Crores. I needed to build something lawyers would trust—where hallucinations aren't bugs, they're liabilities.",
-            solution: "Built a 4-agent pipeline: PLANNER decomposes requirements → RETRIEVER uses hybrid search (pgvector + BM25) → REASONER evaluates compliance → VERIFIER cross-validates claims. Each agent has one job. No monolithic prompts.",
+            problem: "Legal teams spend significant time manually auditing privacy policies for DPDP Act compliance. Inaccuracies in these audits carry substantial regulatory risks and potential penalties.",
+            solution: "Developed a 4-agent orchestration pipeline to automate requirement decomposition, semantic retrieval, and cross-validation. This system ensures high-accuracy citations and verification, moving from manual 60-hour audits to streamlined 2-minute processing.",
             architecture: [
                 "PDF Processing: PyMuPDF extracts text with bounding boxes for precise citations.",
                 "Hybrid Search: pgvector (semantic) + BM25 (exact phrases) merged via RRF.",
@@ -144,12 +144,75 @@ Each agent is testable, upgradeable, observable.
 
 Production AI is 20% prompts, 80% systems engineering.
             `,
-            impact: "Regulator-ready audit system achieving high-fidelity compliance verification for India's DPDP Act 2023."
+            impact: "A regulator-ready audit system providing verified compliance tracking and high-fidelity reporting for digital privacy laws."
         },
         trendingKeywords: ["Multi-Agent-AI", "LLMOps", "Async-Python"],
         links: {
             github: "https://github.com/tanishapritha/company-legal-audit",
             live: "https://company-legal-audit.vercel.app"
+        },
+        hasImage: true
+    },
+    {
+        id: "spec-os",
+        title: "SpecOS",
+        type: "AI Infrastructure / DevTools",
+        tech: ["Next.js 15", "FastAPI", "Groq", "Llama 3.3", "SQLite", "GitHub API"],
+        desc: "A development platform that synchronizes architectural specifications with production code through automated GitHub integration.",
+        story: {
+            problem: "Software development often faces a disconnect between architectural design and implementation. Maintaining a consistent 'source of truth' becomes difficult as the codebase evolves, leading to architectural drift.",
+            solution: "Developed a 'Living Spec' workspace where architecture remains the primary interface. SpecOS utilizes AI to generate boilerplate and database schemas directly into GitHub, maintaining a synchronized blueprint within the repository.",
+            architecture: [
+                "Reverse Engineering: repo_scanner.py uses regex-based static analysis to reconstruct specs from existing repos.",
+                "Orchestration Layer: brain.py manages few-shot prompting and structured JSON generation via Groq Llama 3.3.",
+                "Atomic Sync: Files are staged via the GitHub Tree API to ensure multi-file updates are committed atomically.",
+                "Identity & Auth: Secure OAuth flow with Fernet-encrypted storage for GitHub Personal Access Tokens.",
+                "Infrastructure: Next.js 15 frontend with a high-performance FastAPI backend for sub-second generation cycles."
+            ],
+            technicalDeepDive: `
+## GitHub Integration and Synchronization
+
+Maintaining consistency between an architectural specification and a live repository requires an efficient synchronization strategy. Updating files individually via API can lead to fragmented commit histories and inconsistent states.
+
+![SpecOS Workspace](/projects/spec-os/spec-os.png)
+
+**Atomic Repository Updates**
+Utilized the GitHub Git Tree API to batch multiple file changes into single, atomic commits. This ensures that architectural updates and code generations are applied simultaneously, preserving repository integrity and commit clarity.
+
+![Feature Management](/projects/spec-os/spec-os-features.png)
+
+\`\`\`python
+def sync_to_github(repo, files_to_update, spec_json):
+    # Construct tree entries including the living spec
+    tree_items = [InputGitTreeElement(p, '100644', 'blob', content=c) 
+                  for p, c in files_to_update.items()]
+    tree_items.append(InputGitTreeElement('spec.json', '100644', 'blob', 
+                                         content=json.dumps(spec_json)))
+    
+    # Atomic commit via Git Tree API
+    base_tree = repo.get_git_tree(repo.get_commits()[0].sha)
+    new_tree = repo.create_git_tree(tree_items, base_tree)
+    repo.create_git_commit("Update architecture spec and scaffold", new_tree, ...)
+\`\`\`
+
+## Non-Intrusive Repository Analysis
+For importing existing projects, the system must analyze structure without code execution to ensure security.
+
+![Schema Definition](/projects/spec-os/spec-os-schema.png)
+
+**Implementation:** Developed a specialized parser using framework-aware pattern matching. This analyzes class signatures and API decorators to reconstruct a comprehensive architectural spec from the existing codebase.
+
+## Latency Optimization
+To ensure a responsive user experience, generation times must be minimal.
+
+**Optimization:** Integrated the Groq Llama 3.3 inference engine. By using high-performance inference and optimized prompt structures, generation latency was reduced from 15 seconds to under 800 milliseconds, facilitating a more efficient development workflow.
+`,
+            impact: "A development tool achieving synchronized repository states and low-latency architectural scaffolding."
+        },
+        trendingKeywords: ["LLM-Orchestration", "DevTools", "Static-Analysis"],
+        links: {
+            github: "https://github.com/tanishapritha/specos",
+            live: "https://spec-os.vercel.app"
         },
         hasImage: true
     },

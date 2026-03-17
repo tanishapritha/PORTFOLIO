@@ -23,9 +23,12 @@
   --card-bg: rgba(18, 20, 28, 0.8);
   --code-bg: #050608;
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-inter: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --font-body: var(--font-lora);
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --max-width: 1100px;
+  --max-width: 1200px;
 }
 
 * {

@@ -141,12 +141,12 @@ const Projects = () => {
                   </div>
 
                   <section className="drawer-section">
-                    <h4 className="section-label">01_THE_CHALLENGE</h4>
+                    <h4 className="section-label">The Challenge</h4>
                     <p className="section-text">{selectedProject.story.problem}</p>
                   </section>
 
                   <section className="drawer-section">
-                    <h4 className="section-label">02_THE_ARCHITECTURE</h4>
+                    <h4 className="section-label">Strategic Architecture</h4>
                     <div className="arch-workflow">
                       {selectedProject.story.architecture.map((step, i) => (
                         <div key={i} className="workflow-step">
@@ -158,7 +158,7 @@ const Projects = () => {
                   </section>
 
                   <section className="drawer-section highlight-box">
-                    <h4 className="section-label">03_TECHNICAL_LOGS</h4>
+                    <h4 className="section-label">Technical Narrative</h4>
                     <div className="markdown-content">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {selectedProject.story.technicalDeepDive}
@@ -167,7 +167,7 @@ const Projects = () => {
                   </section>
 
                   <section className="drawer-section footer-stats">
-                    <h4 className="section-label">SYSTEM_IMPACT</h4>
+                    <h4 className="section-label">System Impact</h4>
                     <div className="metric-card">
                       <div className="metric-icon"><CheckCircle2 size={18} /></div>
                       <div className="metric-text">{selectedProject.story.impact}</div>
@@ -206,9 +206,18 @@ const Projects = () => {
 
         .section-pad { padding: 8rem 0; }
         .projects-header { margin-bottom: 5rem; }
-        .accent-tag { color: var(--accent-primary); font-size: 0.8rem; margin-bottom: 1rem; opacity: 0.7; }
-        .project-headline { margin-bottom: 1rem; font-size: 3.5rem; }
-        .pink-sub { color: var(--text-secondary); opacity: 0.8; font-size: 1.1rem; }
+        .project-headline { 
+          margin-bottom: 1rem; 
+          font-size: 3.5rem; 
+          font-family: var(--font-serif);
+          font-weight: 700;
+        }
+        .subtitle { 
+          color: var(--text-secondary); 
+          opacity: 0.8; 
+          font-size: 1.15rem; 
+          font-family: var(--font-body);
+        }
 
         /* Minimal Technical Grid */
         .projects-minimal-grid {
@@ -307,8 +316,20 @@ const Projects = () => {
         .tech-pills { display: flex; gap: 0.5rem; }
         .tiny-pill { font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.5rem; color: var(--text-tertiary); }
 
-        .minimal-card-title { font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary); }
-        .minimal-card-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 2.5rem; }
+        .minimal-card-title { 
+          font-size: 1.65rem; 
+          margin-bottom: 0.85rem; 
+          color: #fff; 
+          font-family: var(--font-serif);
+          font-weight: 600;
+        }
+        .minimal-card-desc { 
+          font-size: 0.95rem; 
+          color: var(--text-secondary); 
+          line-height: 1.6; 
+          margin-bottom: 2.5rem; 
+          font-family: var(--font-body);
+        }
 
         .card-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
         .view-details { font-size: 0.75rem; color: var(--accent-primary); display: flex; align-items: center; gap: 0.5rem; transition: gap 0.3s; }
@@ -365,7 +386,14 @@ const Projects = () => {
 
         .drawer-header { margin-bottom: 4rem; }
         .drawer-meta { color: var(--accent-primary); font-size: 0.8rem; margin-bottom: 1rem; opacity: 0.7; }
-        .drawer-title { font-size: 3.5rem; margin-bottom: 2rem; line-height: 1.1; }
+        .drawer-title { 
+          font-family: var(--font-serif);
+          font-size: clamp(2.5rem, 4vw, 3.5rem); 
+          margin-bottom: 2rem; 
+          line-height: 1.1; 
+          font-weight: 700;
+          color: #fff;
+        }
         .drawer-links { display: flex; gap: 1rem; }
         .btn-spec { 
             display: inline-flex; align-items: center; gap: 0.75rem; 
@@ -381,8 +409,21 @@ const Projects = () => {
         .spec-tech-item { background: #111; border: 1px solid var(--border-color); padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 0; }
 
         .drawer-section { margin-bottom: 4rem; }
-        .section-label { color: var(--text-primary); font-size: 0.8rem; margin-bottom: 1.5rem; letter-spacing: 0.05em; font-weight: 600; }
-        .section-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); }
+        .section-label { 
+          color: var(--accent-primary); 
+          font-size: 0.85rem; 
+          margin-bottom: 1.5rem; 
+          letter-spacing: 0.1em; 
+          font-weight: 600; 
+          text-transform: uppercase;
+          font-family: var(--font-inter);
+        }
+        .section-text { 
+          font-family: var(--font-body);
+          font-size: 1.15rem; 
+          line-height: 1.8; 
+          color: var(--text-secondary); 
+        }
         .italic { font-style: italic; opacity: 0.9; }
 
         .highlight-box { 
@@ -400,7 +441,7 @@ const Projects = () => {
             background: #111; border: 1px solid var(--border-color); border-radius: 4px; 
         }
         .metric-icon { color: var(--accent-primary); }
-        .metric-text { font-size: 1rem; color: var(--text-primary); }
+        .metric-text { font-size: 1rem; color: var(--text-primary); font-family: var(--font-body); }
 
         /* Markdown Content Styles - Classic Compact */
         .markdown-content {
