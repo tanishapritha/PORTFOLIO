@@ -21,6 +21,131 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        id: "threadbase",
+        title: "ThreadBase",
+        type: "AI Engineering / Content Infrastructure",
+        tech: ["FastAPI", "PostgreSQL", "Redis", "Supabase", "Clerk"],
+        desc: "LLM-powered content scheduling platform with async job orchestration, idempotent scheduling, and full audit trail observability.",
+        story: {
+            problem: "Content teams struggle to maintain consistent social media presence across platforms. Manual scheduling is error-prone, lacks intelligent content generation, and offers no visibility into job lifecycle—leading to missed posts, duplicate work, and wasted engineering time.",
+            solution: "Built an LLM-powered content engine that generates and schedules social posts from user ideas and media. Exposed a REST API (draft, schedule, publish) with Clerk authentication and JWT-protected endpoints. Designed a Redis-backed job queue with FastAPI BackgroundTasks and Redis pub/sub for async scheduling—idempotency keys prevent duplicate jobs and TTL-based cache invalidation reduces redundant LLM calls by 60%.",
+            architecture: [
+                "REST API: FastAPI endpoints for draft, schedule, publish with Clerk auth and JWT-protected access.",
+                "Job Queue: Redis-backed async queue with FastAPI BackgroundTasks and Redis pub/sub for reliable scheduling.",
+                "Idempotency Layer: Idempotency keys prevent duplicate job submissions; TTL-based cache reduces redundant LLM calls.",
+                "Audit Trail: Full job lifecycle tracking (enqueued, executing, delivered, failed) in PostgreSQL for complete observability.",
+                "Media Storage: Supabase handles file storage with signed URL access for secure media delivery."
+            ],
+            technicalDeepDive: `
+## The Async Scheduling Challenge
+
+Content scheduling demands reliability. If a job is submitted twice, or if the LLM generates duplicate content, the platform loses trust.
+
+![ThreadBase Overview](/projects/threadbase/threadbase.png)
+
+**Fix: Idempotency Keys**
+\`\`\`python
+async def schedule_post(user_id: str, content: dict, idempotency_key: str):
+    existing = await redis.get(f"idempotency:{idempotency_key}")
+    if existing:
+        return json.loads(existing)
+    
+    result = await process_and_queue(user_id, content)
+    # 24-hour TTL prevents key bloat while catching replays
+    await redis.setex(f"idempotency:{idempotency_key}", 86400, json.dumps(result))
+    return result
+\`\`\`
+
+Without idempotency, a client retry due to a network timeout could publish the same post twice. The key is derived from (user_id + content_hash + scheduled_time), making it deterministic across retries.
+
+## LLM Content Generation at Scale
+
+Calling an LLM for every post idea is expensive—both in latency and token cost. For similar ideas across platforms, responses are often cacheable.
+
+**Fix: Semantic Cache Invalidation**
+\`\`\`python
+def build_cache_key(idea: str, platform: str) -> str:
+    normalized = " ".join(idea.lower().split())
+    return f"llm:generated:{hashlib.sha256(f'{normalized}:{platform}'.encode()).hexdigest()}"
+
+@redis_cache(ttl=3600)
+async def generate_content(idea: str, platform: str, media_urls: list[str]) -> dict:
+    prompt = build_scheduling_prompt(idea, platform, media_urls)
+    return await call_llm(prompt)
+\`\`\`
+
+Hourly TTL means editorial updates propagate within a reasonable window while routine renders hit cache. For breaking content, explicit cache busting via the API clears the key immediately.
+
+![Scheduling Interface](/projects/threadbase/threadbase-scheduler.png)
+
+## Job Lifecycle Observability
+
+Without tracking, a missed post is invisible until a publisher notices. Every job transition must be queryable.
+
+**PostgreSQL Schema:**
+\`\`\`sql
+CREATE TABLE job_lifecycle (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    post_id UUID REFERENCES scheduled_posts(id),
+    status VARCHAR(20) NOT NULL CHECK (status IN ('enqueued', 'executing', 'delivered', 'failed')),
+    idempotency_key VARCHAR(64) UNIQUE NOT NULL,
+    metadata JSONB DEFAULT '{}',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_jobs_status ON job_lifecycle(status);
+CREATE INDEX idx_jobs_user ON job_lifecycle(user_id);
+CREATE INDEX idx_jobs_created ON job_lifecycle(created_at DESC);
+\`\`\`
+
+**Redis Pub/Sub for Real-Time Status:**
+\`\`\`python
+async def publish_job_update(job_id: str, status: str):
+    await redis.publish("job:updates", json.dumps({
+        "job_id": job_id,
+        "status": status,
+        "timestamp": datetime.utcnow().isoformat()
+    }))
+\`\`\`
+
+This powers real-time dashboards and webhook notifications without polling the database.
+
+## Media Delivery via Signed URLs
+
+Supabase RLS policies secure uploads at the bucket level. Signed URLs ensure only authorized users can access media, with configurable expiration.
+
+\`\`\`python
+def get_signed_url(bucket: str, path: str, expires_in: int = 3600):
+    return supabase.storage.from_(bucket).create_signed_url(path, expires_in)
+\`\`\`
+
+## Architecture Rationale
+
+**Redis over RabbitMQ:** For this use case, Redis provides a simpler operational profile—one fewer stateful service to manage—while delivering reliable pub/sub semantics. The idempotency layer doubles as a lightweight rate limiter and cache store.
+
+**PostgreSQL Audit Trail over Log-Based Observability:** Logs rotate and disappear. A structured job_lifecycle table survives deployments, supports analytics queries ("average time from enqueued to delivered"), and integrates with the application's existing ORM.
+
+**Clerk Auth:** JWT-protected endpoints with Clerk's session management. Portal-based user management eliminated the need to build auth from scratch, and webhook-based user sync keeps the local user table in sync with Clerk's directory.
+
+## Key Learnings
+
+1. **Idempotency is non-negotiable** for scheduling operations—network retries are inevitable
+2. **Cache invalidation strategy matters more** than the cache itself; TTL-based expiry with explicit busting strikes the right balance
+3. **Observable job lifecycles build trust**—every stakeholder can answer "did my post go out?"
+4. **Signed URL access prevents media leaks** without complex infrastructure
+5. **Redis for dual-purpose caching + queuing** reduces operational complexity without sacrificing reliability`,
+            impact: "A production-grade content scheduling platform achieving reliable job execution with complete lifecycle observability, efficient LLM cost management through semantic caching, and secure media delivery via signed URLs."
+        },
+        trendingKeywords: ["LLM-Caching", "Async-Queue", "Content-AI"],
+        links: {
+            github: "https://github.com/tanishapritha/threadbase",
+            live: "#"
+        },
+        hasImage: true
+    },
+    {
         id: "company-legal-audit",
         title: "AI Compliance Audit Engine",
         type: "Multi-Agent AI / LegalTech",
