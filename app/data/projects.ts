@@ -21,6 +21,95 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        id: "real-estate-agent",
+        title: "RealEstate AI Sales OS",
+        type: "AI Workflow Platform / PropTech",
+        tech: ["LangGraph", "FastAPI", "LiteLLM", "MCP", "PostgreSQL", "Redis Streams", "Celery", "Pydantic v2", "NeMo Guardrails", "DeepEval", "OpenTelemetry", "Streamlit"],
+        desc: "Stateful multi-agent workflow engine that orchestrates the real estate sales lifecycle through a directed graph with checkpoint-based persistence, MCP tool abstraction, and human-in-the-loop interrupts.",
+        story: {
+            problem: "The core engineering challenge is orchestrating multiple LLM agents across a non-linear workflow with durable state. A lead doesn't move linearly from qualification to close—customers circle back, escalate mid-conversation, or go silent and return days later. This requires a state machine that survives process restarts, supports human interrupts at arbitrary points, and calls external systems (CRM, calendar, property search) through a protocol that decouples agent logic from integration code. Sequential LLM chains break here because they can't branch, pause, or resume. A simple queue-based pipeline breaks because routing decisions depend on accumulated conversation context, not just the last message.",
+            solution: "Designed a LangGraph directed graph where each node is a typed state transition backed by a PostgreSQL checkpoint. Three agents (qualification, recommendation, engagement) are registered as graph nodes; the supervisor is implemented as conditional edges using pure state predicates—no LLM call on the deterministic path. Agents access external systems exclusively through the Model Context Protocol (MCP), which provides a JSON-RPC tool interface that decouples agent prompts from integration implementations. The graph interrupts before side-effecting operations (CRM writes, calendar bookings) when confidence is below threshold, parking the workflow until a human acts. Redis Streams + Celery handle async fan-out for notifications and background processing. LiteLLM provides a unified gateway across GPT, Claude, and Gemini with automatic fallback.",
+            architecture: [
+                "State Machine (LangGraph): Directed graph with typed state (Pydantic v2 models). Nodes: qualification, recommendation, customer_reply, decision_router, engagement. Edges are conditional on WorkflowState fields—no LLM call needed for deterministic transitions.",
+                "Checkpoint Persistence (PostgreSQL): Every node writes a checkpoint via LangGraph's built-in SqliteSaver/PostgresSaver. Enables pause/resume across process restarts, human review cycles, and partial failure recovery. Checkpoints are append-only—full audit trail of every state transition.",
+                "Tool Abstraction (MCP): Agents call tools through a typed MCP client registry. 2 MCP servers expose 16 tools total. CRM server: create_lead, update_stage, fetch_customer, add_note, book_visit, cancel_visit, available_slots, send_message, send_reminder, conversation_history. Property server: search_properties, property_details, availability, faq_lookup, builder_policies, payment_plans.",
+                "LLM Gateway (LiteLLM): Unified interface across OpenAI, Anthropic, Google. Handles retries with exponential backoff, model fallback chains (GPT-4 → Claude → Gemini), token budget enforcement, and structured output parsing via Pydantic response models.",
+                "Human-in-the-Loop: Graph interrupt mechanism triggers before CRM mutations when qualification_confidence < 0.7 or customer requests human. Workflow parks at checkpoint, emits event to Redis Stream, resumes from exact state after human action.",
+                "Async Pipeline (Redis Streams + Celery): Decouples workflow execution from side effects. Celery workers consume from Redis Streams for email/SMS dispatch, webhook delivery, and analytics aggregation. Structlog + OpenTelemetry trace every agent execution, tool invocation, and state transition."
+            ],
+            technicalDeepDive: `
+## State Machine Design: Why LangGraph Over Chains or Queues
+
+**The problem with LLM chains:** A chain is a linear pipeline—A → B → C. Real workflows branch. After recommendation, a customer might ask a clarifying question (back to recommendation), accept (forward to engagement), escalate (interrupt for human), or go silent (park for follow-up). Chains can't represent this without brittle if/else wrappers that grow combinatorially.
+
+**The problem with queue-based pipelines:** A queue decouples producers and consumers, but routing decisions in this system depend on accumulated state—the full conversation history, qualification score, and previous recommendations. A stateless consumer pulling from a queue doesn't have this context without re-fetching it every time, which adds latency and creates race conditions on concurrent updates.
+
+**LangGraph's fit:** Each node receives the full typed WorkflowState, makes a single decision, mutates state, and returns it. Conditional edges inspect state fields (not LLM output) to route. The graph is a finite state machine with durable checkpoints—exactly what this domain requires.
+
+## Agent Topology: Why 3, Not 6
+
+Started with 6 agents mirroring business functions: lead intake, qualification, inventory search, recommendation, follow-up, CRM sync. In practice, inventory + recommendation always executed back-to-back on identical input (the customer's requirements). Two sequential LLM calls with the same context is wasted latency and tokens—merged into one Recommendation agent that searches, ranks, and explains in a single prompt chain.
+
+Follow-up and CRM were a false separation. "Send a follow-up email" and "update CRM stage to follow-up" are the same business decision with two side effects, not two independent decisions. Merged into Engagement agent that receives a decision enum (FOLLOW_UP | APPOINTMENT | ESCALATE | LOST) and executes all associated side effects transactionally.
+
+The Supervisor was the most impactful change. Original design: every routing decision goes through an LLM call. In practice, 90%+ of transitions are deterministic—if qualification_score exists, go to recommendation; if customer_reply is empty, wait; if decision is ESCALATE, interrupt. Replaced with conditional edge predicates. LLM call only fires for genuinely ambiguous cases: "is this customer reply on-topic or should it go to human review?"
+
+**Cost impact:** ~40% reduction in LLM calls per workflow execution. **Latency impact:** Eliminated 3 unnecessary LLM round-trips on the critical path.
+
+## MCP Tool Protocol: Interface Segregation for AI Agents
+
+Agents don't import CRM client libraries or know about database schemas. They call tools through the Model Context Protocol—a JSON-RPC interface where each tool has a typed schema (name, description, input parameters, output type). The MCP client registry resolves tool names to server endpoints at runtime.
+
+**Why this matters for swapability:** The CRM server currently uses an in-memory store with PostgreSQL persistence. Replacing it with a Salesforce or HubSpot integration means implementing the same 10 tool signatures against a different backend. Zero agent code changes. Zero prompt changes. The agent's tool-calling behavior is defined by the schema, not the implementation.
+
+**Why 2 servers, not 5:** Original design had CRM, Calendar, Messaging, Inventory, Knowledge as separate servers. CRM + Calendar + Messaging are one domain (managing the lead relationship)—splitting them created cross-server coordination problems for operations like "book a visit AND send a confirmation AND update CRM stage." Property + Knowledge are one domain (answering questions about properties)—a recommendation almost always needs both search results and FAQ context. Consolidating reduced inter-server calls from 3-4 per workflow step to 1.
+
+## Checkpoint Architecture: Durable State Without Event Sourcing
+
+Considered event sourcing (store every event, rebuild state by replay). Rejected because:
+1. Replay latency grows with conversation length—a 20-message conversation means 20+ events to replay on resume
+2. Event schema evolution is painful when agent outputs change frequently during development
+3. The system needs current state for routing decisions, not historical projections
+
+Instead: snapshot-based checkpoints. After each node, the full WorkflowState (typed Pydantic model) is serialized to PostgreSQL. Resume = load latest checkpoint + continue from that node. Checkpoints are append-only, so history is preserved without replay.
+
+**Failure recovery:** If a node fails mid-execution (LLM timeout, tool error), the graph retries from the last committed checkpoint. The failed node re-executes with the same input state. Idempotency is enforced at the tool level—MCP servers use idempotency keys for mutations (create_lead, book_visit, send_message).
+
+## LLM Reliability Engineering
+
+**Structured outputs:** Every agent returns a Pydantic model, not free text. LiteLLM's response_model parameter enforces JSON schema compliance. If the LLM returns malformed output, the gateway retries with a "your output didn't match the schema" correction prompt (max 2 retries) before falling back to the next model in the chain.
+
+**Model fallback:** LiteLLM gateway configured with ordered fallback: GPT-4o → Claude Sonnet → Gemini Pro. If the primary model hits rate limits or returns 5xx, the request transparently routes to the next available model. Token budgets are enforced per-agent to prevent runaway costs.
+
+**Guardrails (NeMo):** Input rails reject prompt injection attempts and off-topic inputs before they reach the agent. Output rails validate that responses don't contain PII, don't make commitments the system can't fulfill (e.g., price guarantees), and stay within the agent's domain scope.
+
+## Evaluation Pipeline (DeepEval)
+
+Three automated metrics run on every workflow execution:
+- **Faithfulness:** Does the agent's response to the customer match the source data from the property server? Catches hallucinated property details, fabricated prices, or made-up availability.
+- **Tool Correctness:** Did the agent call the right MCP tool with valid arguments? Catches tool misuse—e.g., calling search_properties with a budget filter when the customer asked about location.
+- **Routing Accuracy:** Did the supervisor's conditional edges route to the correct next node? Validated against a labeled dataset of customer replies and expected routing decisions.
+
+Results are exposed in the Streamlit dashboard's Insights tab and linked to LangSmith traces for per-step debugging. No attempt to rebuild LangSmith's trace UI inline—just the aggregate metrics and a deep link.
+
+## Observability Stack
+
+**Structured logging (Structlog):** Every log line is a JSON object with correlation IDs (workflow_id, agent_name, tool_name). Log levels are semantic: agent_decision, tool_invocation, checkpoint_written, human_interrupt.
+
+**Distributed tracing (OpenTelemetry):** Each workflow execution is a trace. Each agent call is a span. Each tool invocation is a child span. Trace context propagates through Redis Streams to Celery workers, so async side effects are correlated with the originating workflow.
+
+**LangSmith integration:** LLM calls are traced with prompt/completion pairs, token counts, latency, and model used. Enables prompt debugging and cost attribution per agent.
+`,
+            impact: "A production-grade multi-agent system demonstrating stateful workflow orchestration with checkpoint persistence, MCP tool abstraction for integration decoupling, LLM reliability engineering (structured outputs, model fallback, guardrails), and automated evaluation—reducing per-workflow LLM calls by 40% through agent consolidation and deterministic routing."
+        },
+        trendingKeywords: ["LangGraph", "MCP-Protocol", "AI-Agents"],
+        links: {
+            github: "https://github.com/tanishapritha/real-estate-agent",
+            live: "#"
+        },
+        hasImage: true
+    },
+    {
         id: "threadbase",
         title: "ThreadBase",
         type: "AI Engineering / Content Infrastructure",

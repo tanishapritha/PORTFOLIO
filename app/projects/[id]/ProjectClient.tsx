@@ -46,8 +46,7 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
           <div className="content-side">
             <section className="summary-card">
               <div className="card-header">
-                <ShieldCheck className="accent-icon" />
-                <h2>Executive Summary</h2>
+                <h2>Summary</h2>
               </div>
               <div className="narrative">
                 <div className="problem-statement">
@@ -123,18 +122,27 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
         }
 
         .back-breadcrumb {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
-          color: var(--text-tertiary);
+          gap: 0.6rem;
+          color: var(--text-secondary);
           text-decoration: none;
-          font-size: 0.9rem;
-          margin-bottom: 2rem;
-          transition: color 0.2s;
+          font-size: 0.85rem;
+          font-family: var(--font-mono);
+          padding: 0.5rem 1rem;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          margin-bottom: 2.5rem;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          width: fit-content;
         }
 
         .back-breadcrumb:hover {
           color: var(--accent-primary);
+          border-color: var(--accent-primary);
+          background: rgba(56, 189, 248, 0.08);
+          transform: translateX(-4px);
         }
 
         .header-grid {
