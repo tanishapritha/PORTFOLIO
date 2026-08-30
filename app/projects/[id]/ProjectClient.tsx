@@ -1,413 +1,499 @@
 "use client";
 import React from 'react';
-import { projects } from '@/app/data/projects';
-import { ArrowLeft, Github, ExternalLink, ShieldCheck, Zap, Layers, Cpu, Globe } from 'lucide-react';
+import Image from 'next/image';
+import { Project } from '@/app/data/projects';
+import { 
+  ArrowLeft, 
+  Github, 
+  ExternalLink, 
+  Cpu, 
+  ArrowRight,
+  Sparkles
+} from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import MobileStickyCTA from '@/components/MobileStickyCTA';
+import { siteConfig } from '@/app/data/siteConfig';
 
 interface ProjectClientProps {
   id: string;
-  project: typeof projects[0];
+  project: Project;
 }
 
 export default function ProjectClient({ id, project }: ProjectClientProps) {
   if (!project) return null;
 
   return (
-    <main className="project-detail">
-      <div className="container">
-        <header className="page-header">
-          <Link href="/#projects" className="back-breadcrumb">
-            <ArrowLeft size={16} /> Back to Projects
-          </Link>
-
-          <div className="header-grid">
-            <div className="title-area">
-              <span className="project-category mono">{project.type}</span>
-              <h1 className="project-title-serif">{project.title}</h1>
-              <p className="impact-statement">{project.story.impact}</p>
+    <div className="site-wrapper">
+      <Navbar />
+      <main className="project-editorial-detail">
+        <div className="container">
+          {/* Header */}
+          <header className="project-detail-header">
+            <div className="breadcrumb-row">
+              <Link href="/work" className="back-link">
+                <ArrowLeft size={14} />
+                <span>Back to All Work</span>
+              </Link>
+              <span className="divider">/</span>
+              <span className="current-title">{project.title}</span>
             </div>
 
-            <div className="quick-actions">
-              <a href={project.links.github} className="btn-professional primary" target="_blank" rel="noopener noreferrer">
-                <Github size={18} /> Source Code
-              </a>
-              {project.links.live !== "#" && (
-                <a href={project.links.live} className="btn-professional outline" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink size={18} /> View Live
-                </a>
+            <div className="title-actions-grid">
+              <div className="title-area">
+                <span className="section-kicker">{project.type}</span>
+                <h1 className="project-h1 serif-display">{project.title}</h1>
+                <p className="impact-quote">{project.story.impact}</p>
+              </div>
+
+              <div className="action-buttons">
+                {project.links.github && (
+                  <a 
+                    href={project.links.github} 
+                    className="btn btn-outline" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Github size={17} /> 
+                    <span>Source Code</span>
+                  </a>
+                )}
+                {project.links.live && project.links.live !== "#" && (
+                  <a 
+                    href={project.links.live} 
+                    className="btn btn-accent" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink size={17} /> 
+                    <span>Live Demo</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </header>
+
+          {/* Main Layout Grid */}
+          <div className="project-content-grid">
+            <div className="content-main-col">
+              {/* Project Hero Image */}
+              {project.image && (
+                <div className="project-hero-image-box">
+                  <Image 
+                    src={project.image} 
+                    alt={project.title}
+                    width={1000}
+                    height={520}
+                    className="project-hero-img"
+                    priority
+                  />
+                </div>
               )}
-            </div>
-          </div>
-        </header>
 
-        <div className="main-grid">
-          <div className="content-side">
-            <section className="summary-card">
-              <div className="card-header">
-                <h2>Summary</h2>
-              </div>
-              <div className="narrative">
-                <div className="problem-statement">
-                  <h3>The Challenge</h3>
-                  <p>{project.story.problem}</p>
+              {/* Business Layer Summary Card */}
+              <section className="business-summary-card">
+                <div className="card-top-kicker mono">01 // BUSINESS PROBLEM & STRATEGY</div>
+                <div className="narrative-blocks">
+                  <div className="block">
+                    <h3 className="block-title mono">THE PROBLEM THAT NEEDED SOLVING</h3>
+                    <p className="block-text">{project.story.problem}</p>
+                  </div>
+                  <div className="block">
+                    <h3 className="block-title mono text-accent">WHAT WAS ACTUALLY IMPLEMENTED</h3>
+                    <p className="block-text">{project.story.solution}</p>
+                  </div>
                 </div>
-                <div className="solution-statement">
-                  <h3>The Strategic Solution</h3>
-                  <p>{project.story.solution}</p>
+              </section>
+
+              {/* Technical Deep Dive */}
+              <section className="technical-deep-dive-card">
+                <div className="card-top-kicker mono">02 // TECHNICAL IMPLEMENTATION & ARCHITECTURE</div>
+                <div className="markdown-render-area">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {project.story.technicalDeepDive}
+                  </ReactMarkdown>
+                </div>
+              </section>
+
+              {/* Contextual CTA */}
+              <section className="case-cta-banner">
+                <div className="cta-left">
+                  <span className="section-kicker">Need Something Similar?</span>
+                  <h3 className="cta-title serif-display">
+                    Have a similar workflow or system you want to build?
+                  </h3>
+                  <p className="cta-desc">
+                    I can design, implement, and integrate custom software tailored to your company&apos;s specific operations.
+                  </p>
+                </div>
+                <div className="cta-buttons">
+                  <Link 
+                    href={`/contact?problem=Build something similar to ${encodeURIComponent(project.title)}`} 
+                    className="btn btn-accent"
+                  >
+                    <span>Build Something Similar</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                </div>
+              </section>
+            </div>
+
+            {/* Sidebar */}
+            <aside className="sidebar-col">
+              <div className="sidebar-card">
+                <h3 className="sidebar-card-title mono">CORE TECH STACK</h3>
+                <div className="tech-tags-list">
+                  {project.tech.map((t, idx) => (
+                    <span key={idx} className="editorial-tag">{t}</span>
+                  ))}
                 </div>
               </div>
-            </section>
 
-            <section className="deep-dive-area">
-              <div className="card-header">
-                <Cpu className="accent-icon" />
-                <h2>Technical Implementation</h2>
+              <div className="sidebar-card">
+                <h3 className="sidebar-card-title mono">ARCHITECTURE HIGHLIGHTS</h3>
+                <ul className="arch-steps-list">
+                  {project.story.architecture.map((step, idx) => (
+                    <li key={idx} className="arch-step-li">
+                      <span className="step-num mono">0{idx + 1}</span>
+                      <span className="step-text">{step}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="markdown-content">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {project.story.technicalDeepDive}
-                </ReactMarkdown>
+
+              <div className="sidebar-card">
+                <h3 className="sidebar-card-title mono">DOMAINS & KEYWORDS</h3>
+                <div className="tech-tags-list">
+                  {project.trendingKeywords.map((k, idx) => (
+                    <span key={idx} className="editorial-tag">#{k}</span>
+                  ))}
+                </div>
               </div>
-            </section>
+            </aside>
           </div>
-
-          <aside className="sidebar">
-            <div className="sidebar-block sticky-stats">
-              <h3>Core Tech Stack</h3>
-              <div className="tech-pills">
-                {project.tech.map(t => (
-                  <span key={t} className="tech-pill">{t}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="sidebar-block">
-              <h3>Architecture Highlights</h3>
-              <ul className="arch-list">
-                {project.story.architecture.map((step, idx) => (
-                  <li key={idx}>
-                    <span className="idx">{idx + 1}</span>
-                    <span className="text">{step}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="sidebar-block">
-              <h3>Trending & Keywords</h3>
-              <div className="keyword-cloud">
-                {project.trendingKeywords.map(k => (
-                  <span key={k} className="keyword-tag">#{k}</span>
-                ))}
-              </div>
-            </div>
-          </aside>
         </div>
-      </div>
+      </main>
+      <Footer />
+      <MobileStickyCTA />
 
       <style jsx>{`
-        .project-detail {
-          padding: 6rem 0;
+        .project-editorial-detail {
+          padding: 3.5rem 0 6rem;
+          background: #faf8f5;
           min-height: 100vh;
-          background-color: var(--bg-primary);
-          color: var(--text-primary);
         }
 
-        .page-header {
-          margin-bottom: 4rem;
-          border-bottom: 1px solid var(--border-color);
-          padding-bottom: 3rem;
+        .project-detail-header {
+          margin-bottom: 3.5rem;
+          padding-bottom: 2.5rem;
+          border-bottom: 1px solid var(--border-light);
         }
 
-        .back-breadcrumb {
-          display: inline-flex;
+        .breadcrumb-row {
+          display: flex;
           align-items: center;
           gap: 0.6rem;
-          color: var(--text-secondary);
+          margin-bottom: 2rem;
+          font-size: 0.875rem;
+        }
+
+        .back-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          color: var(--text-muted);
           text-decoration: none;
-          font-size: 0.85rem;
-          font-family: var(--font-mono);
-          padding: 0.5rem 1rem;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid var(--border-color);
-          border-radius: 6px;
-          margin-bottom: 2.5rem;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-          width: fit-content;
+          transition: color 0.15s ease;
         }
 
-        .back-breadcrumb:hover {
-          color: var(--accent-primary);
-          border-color: var(--accent-primary);
-          background: rgba(56, 189, 248, 0.08);
-          transform: translateX(-4px);
+        .back-link:hover {
+          color: var(--accent);
         }
 
-        .header-grid {
+        .divider {
+          color: var(--text-muted);
+        }
+
+        .current-title {
+          color: var(--text-primary);
+          font-weight: 500;
+        }
+
+        .title-actions-grid {
           display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 2rem;
+          grid-template-columns: 1.3fr auto;
+          gap: 2.5rem;
           align-items: flex-end;
         }
 
-        .project-category {
-          display: block;
-          font-size: 0.8rem;
-          color: var(--accent-primary);
-          margin-bottom: 1rem;
-          letter-spacing: 0.2em;
-        }
-
-        .project-title-serif {
-          font-family: var(--font-serif);
-          font-size: clamp(2.5rem, 5vw, 4.5rem);
+        .project-h1 {
+          font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+          color: var(--text-primary);
           line-height: 1.1;
-          margin-bottom: 1.5rem;
-          font-weight: 700;
-          color: #fff;
+          margin-bottom: 1rem;
         }
 
-        .impact-statement {
-          font-family: var(--font-body);
-          font-size: 1.25rem;
+        .impact-quote {
+          font-size: 1.1875rem;
           color: var(--text-secondary);
           max-width: 800px;
-          line-height: 1.6;
+          line-height: 1.65;
         }
 
-        .quick-actions {
+        .action-buttons {
           display: flex;
-          gap: 1rem;
+          gap: 0.85rem;
+          flex-wrap: wrap;
         }
 
-        .btn-professional {
-          padding: 0.8rem 1.5rem;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          font-size: 0.9rem;
-          font-weight: 500;
-          text-decoration: none;
-          transition: all 0.3s ease;
-        }
-
-        .btn-professional.primary {
-          background: #fff;
-          color: #000;
-        }
-
-        .btn-professional.primary:hover {
-          background: #e2e8f0;
-          transform: translateY(-2px);
-        }
-
-        .btn-professional.outline {
-          border: 1px solid var(--border-color);
-          color: #fff;
-        }
-
-        .btn-professional.outline:hover {
-          border-color: var(--accent-primary);
-          background: rgba(255, 255, 255, 0.05);
-        }
-
-        .main-grid {
+        .project-content-grid {
           display: grid;
           grid-template-columns: 1fr 340px;
-          gap: 4rem;
+          gap: 3.5rem;
+          align-items: start;
         }
 
-        .content-side {
-          display: flex;
-          flex-direction: column;
-          gap: 4rem;
-        }
-
-        .card-header {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
-
-        .card-header h2 {
-          font-family: var(--font-serif);
-          font-size: 1.75rem;
-          margin: 0;
-        }
-
-        .accent-icon {
-          color: var(--accent-primary);
-        }
-
-        .summary-card {
-          background: var(--bg-tertiary);
-          padding: 3rem;
-          border-radius: 16px;
-          border: 1px solid var(--border-color);
-        }
-
-        .narrative {
-          display: grid;
-          gap: 2.5rem;
-        }
-
-        .narrative h3 {
-          font-size: 0.9rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: var(--text-tertiary);
-          margin-bottom: 1rem;
-          font-family: var(--font-inter);
-        }
-
-        .narrative p {
-          font-family: var(--font-body);
-          font-size: 1.15rem;
-          line-height: 1.8;
-          color: var(--text-secondary);
-        }
-
-        .markdown-content {
-          font-family: var(--font-body);
-          font-size: 1.1rem;
-          line-height: 1.8;
-          color: var(--text-secondary);
-        }
-
-        .markdown-content :global(h2) {
-          font-family: var(--font-serif);
-          color: #fff;
-          margin-top: 2rem;
-          margin-bottom: 1rem;
-          font-size: 1.5rem;
-        }
-
-        .markdown-content :global(h3) {
-          color: var(--text-primary);
-          margin-top: 1.5rem;
-          margin-bottom: 0.75rem;
-          font-size: 1.2rem;
-        }
-
-        .markdown-content :global(p) {
-          margin-bottom: 1.5rem;
-        }
-
-        .markdown-content :global(pre) {
-          background: #000;
-          padding: 1.5rem;
-          border-radius: 12px;
-          overflow-x: auto;
-          border: 1px solid var(--border-color);
-          margin: 1.5rem 0;
-        }
-
-        .markdown-content :global(code) {
-          font-family: var(--font-mono);
-          font-size: 0.9rem;
-        }
-
-        .markdown-content :global(ul) {
-          margin-bottom: 1.5rem;
-          padding-left: 1.5rem;
-        }
-
-        .markdown-content :global(li) {
-          margin-bottom: 0.5rem;
-        }
-
-        .sidebar {
+        .content-main-col {
           display: flex;
           flex-direction: column;
           gap: 3rem;
         }
 
-        .sidebar-block {
-          border-top: 1px solid var(--border-color);
-          padding-top: 2rem;
+        .project-hero-image-box {
+          width: 100%;
+          background: #ffffff;
+          border: 1px solid var(--border-light);
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
         }
 
-        .sidebar-block h3 {
-          font-size: 0.85rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: var(--text-tertiary);
-          margin-bottom: 1.5rem;
+        .project-hero-img {
+          width: 100%;
+          height: auto;
+          display: block;
+          object-fit: cover;
         }
 
-        .tech-pills {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .tech-pill {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid var(--border-color);
-          padding: 0.4rem 0.8rem;
-          border-radius: 4px;
-          font-size: 0.8rem;
-          color: var(--text-secondary);
-        }
-
-        .arch-list {
-          list-style: none;
-          padding: 0;
+        .business-summary-card, .technical-deep-dive-card {
+          background: #ffffff;
+          border: 1px solid var(--border-light);
+          border-radius: var(--radius-md);
+          padding: 2.5rem;
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
         }
 
-        .arch-list li {
+        .card-top-kicker {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--text-muted);
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid var(--border-light);
+        }
+
+        .narrative-blocks {
           display: flex;
+          flex-direction: column;
+          gap: 1.75rem;
+        }
+
+        .block {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        .block-title {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--text-muted);
+        }
+
+        .text-accent {
+          color: var(--accent);
+        }
+
+        .block-text {
+          font-size: 1.0625rem;
+          color: var(--text-secondary);
+          line-height: 1.75;
+        }
+
+        .markdown-render-area {
+          font-size: 1.0625rem;
+          line-height: 1.8;
+          color: var(--text-secondary);
+        }
+
+        .markdown-render-area :global(h2) {
+          font-family: var(--font-serif);
+          font-size: 1.65rem;
+          color: var(--text-primary);
+          margin-top: 2.5rem;
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid var(--border-light);
+        }
+
+        .markdown-render-area :global(h3) {
+          font-family: var(--font-serif);
+          font-size: 1.35rem;
+          color: var(--text-primary);
+          margin-top: 1.75rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .markdown-render-area :global(p) {
+          margin-bottom: 1.25rem;
+        }
+
+        .markdown-render-area :global(ul), .markdown-render-area :global(ol) {
+          margin-bottom: 1.5rem;
+          padding-left: 1.5rem;
+        }
+
+        .markdown-render-area :global(li) {
+          margin-bottom: 0.5rem;
+        }
+
+        .markdown-render-area :global(pre) {
+          background: #111216;
+          color: #f7f6f2;
+          border-radius: var(--radius-sm);
+          padding: 1.25rem;
+          overflow-x: auto;
+          margin: 1.5rem 0;
+          font-size: 0.875rem;
+        }
+
+        .markdown-render-area :global(code) {
+          font-family: var(--font-mono);
+          font-size: 0.875rem;
+        }
+
+        .markdown-render-area :global(img) {
+          max-width: 100%;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--border-light);
+          margin: 1.5rem 0;
+        }
+
+        .case-cta-banner {
+          background: #faf8f5;
+          border: 1px solid var(--border-strong);
+          border-radius: var(--radius-md);
+          padding: 2.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2rem;
+          flex-wrap: wrap;
+        }
+
+        .cta-left {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          max-width: 600px;
+        }
+
+        .cta-title {
+          font-size: 1.65rem;
+          color: var(--text-primary);
+        }
+
+        .cta-desc {
+          font-size: 1rem;
+          color: var(--text-secondary);
+          line-height: 1.55;
+        }
+
+        /* Sidebar */
+        .sidebar-col {
+          display: flex;
+          flex-direction: column;
+          gap: 1.75rem;
+          position: sticky;
+          top: 90px;
+        }
+
+        .sidebar-card {
+          background: #ffffff;
+          border: 1px solid var(--border-light);
+          border-radius: var(--radius-md);
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
           gap: 1rem;
-          font-size: 0.95rem;
+        }
+
+        .sidebar-card-title {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--text-muted);
+        }
+
+        .tech-tags-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+        }
+
+        .editorial-tag {
+          font-size: 0.8125rem;
+          color: var(--text-secondary);
+          background: #faf8f5;
+          border: 1px solid var(--border-light);
+          padding: 0.25rem 0.6rem;
+          border-radius: var(--radius-xs);
+        }
+
+        .arch-steps-list {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .arch-step-li {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          font-size: 0.875rem;
           color: var(--text-secondary);
           line-height: 1.5;
         }
 
-        .idx {
-          color: var(--accent-primary);
-          font-family: var(--font-mono);
+        .step-num {
+          font-size: 0.75rem;
           font-weight: 700;
-          font-size: 0.8rem;
-          opacity: 0.5;
-        }
-
-        .keyword-cloud {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .keyword-tag {
-          font-size: 0.8rem;
-          color: var(--text-tertiary);
-          font-family: var(--font-mono);
+          color: var(--accent);
+          flex-shrink: 0;
+          margin-top: 0.15rem;
         }
 
         @media (max-width: 1024px) {
-          .main-grid {
+          .title-actions-grid, .project-content-grid {
             grid-template-columns: 1fr;
+            gap: 2rem;
           }
-          
-          .header-grid {
-            grid-template-columns: 1fr;
+          .sidebar-col {
+            position: static;
           }
-          
-          .quick-actions {
-            justify-content: flex-start;
-          }
-
-          .sidebar {
-            order: -1;
+          .case-cta-banner {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
       `}</style>
-    </main>
+    </div>
   );
 }

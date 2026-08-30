@@ -1,176 +1,208 @@
 "use client";
 import React from 'react';
-import { Download, Mail, ArrowRight, User } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
+import { siteConfig } from '@/app/data/siteConfig';
 
-const Hero = () => {
+export default function Hero() {
   return (
-    <section className="hero">
+    <section className="hero-section">
       <div className="container hero-container">
-        <div className="hero-content">
-          <h1 className="hero-name">
-            TANISHA PRITHA
+        {/* Left Column: Core Positioning & CTAs */}
+        <div className="hero-left-col">
+          <div className="hero-kicker-row">
+            <span className="section-kicker">AI + Software Builder</span>
+            <div className="availability-pill">
+              <span className="status-dot-green"></span>
+              <span>{siteConfig.availability}</span>
+            </div>
+          </div>
+
+          <h1 className="hero-headline serif-display">
+            I turn business problems into <span className="serif-italic accent-text">working software.</span>
           </h1>
 
-          <h2 className="hero-title subtle">
-            Mechanical Undergrad & Full-Stack AI Engineer
-          </h2>
-
-          <p className="hero-bio">
-            Mechanical engineer bridging the gap between solutions and intelligence.
-            I build high-performance applications with <strong>Python</strong> and <strong>C++</strong>,
-            delivering efficient, AI-integrated solutions for complex engineering challenges.
+          <p className="hero-subtext">
+            AI agents, apps, automation and intelligent systems built around how your business actually works.
           </p>
 
-          <p className="hero-pitch subtle">
-            Whether it's optimizing inference for a custom LLM or architecting a securer Enterprise RAG pipeline,
-            I obsess over the details from the tensor level to the React component.
-          </p>
+          <div className="hero-actions-row">
+            <Link href="/contact" className="btn btn-accent btn-hero">
+              <span>Tell me what you&apos;re building</span>
+              <ArrowRight size={16} />
+            </Link>
 
-          <div className="hero-actions">
-            <a href="#projects" className="btn-primary">
-              View Work <ArrowRight size={18} />
-            </a>
-            <a href="/resume.pdf" target="_blank" className="btn-outline">
-              <Download size={18} /> Get CV
-            </a>
+            <Link href="/work" className="btn btn-outline btn-hero">
+              <span>See my work</span>
+            </Link>
           </div>
         </div>
 
-        <div className="hero-visual">
-          <div className="profile-image-container">
-            <img
-              src="/image.png"
-              alt="Tanisha Pritha"
-              className="profile-img"
-            />
-            <div className="img-overlay"></div>
+        {/* Right Column: Editorial Portrait Frame */}
+        <div className="hero-right-col">
+          <div className="portrait-frame">
+            <div className="image-wrapper">
+              <Image 
+                src="/image.png" 
+                alt="Tanisha Pritha"
+                width={460}
+                height={520}
+                priority
+                className="portrait-img"
+              />
+            </div>
+            <div className="portrait-caption">
+              <span className="caption-name">Tanisha Pritha</span>
+              <span className="caption-detail">Systems, multi-agent graphs & AI engineering</span>
+            </div>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .hero {
-          min-height: 85vh;
-          display: flex;
-          align-items: center;
-          padding-top: 6rem;
-          background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
+        .hero-section {
+          padding: 5rem 0 6rem;
+          position: relative;
         }
 
         .hero-container {
           display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 6rem;
+          grid-template-columns: 1.25fr 1fr;
+          gap: 4.5rem;
           align-items: center;
         }
 
-        .hero-name {
-          font-size: clamp(3rem, 6vw, 5rem);
-          line-height: 0.95;
-          letter-spacing: -0.04em;
-          font-weight: 700;
-          margin-bottom: 1rem;
+        .hero-left-col {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .hero-kicker-row {
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+          margin-bottom: 1.25rem;
+          flex-wrap: wrap;
+        }
+
+        .hero-headline {
+          font-size: clamp(2.75rem, 5.5vw, 4.5rem);
           color: var(--text-primary);
+          margin-bottom: 1.25rem;
+          line-height: 1.06;
+          letter-spacing: -0.035em;
         }
 
-        .hero-title {
-          font-size: clamp(1.25rem, 2vw, 1.5rem);
-          color: var(--accent-primary);
-          margin-bottom: 2.5rem;
-          font-weight: 500;
-          font-family: var(--font-mono);
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
+        .accent-text {
+          color: var(--accent);
         }
 
-        .hero-bio {
-          font-size: 1.15rem;
-          line-height: 1.7;
-          margin-bottom: 2.5rem;
-          max-width: 650px;
+        .hero-subtext {
+          font-size: 1.25rem; /* 20px */
           color: var(--text-secondary);
+          line-height: 1.6;
+          margin-bottom: 2.25rem;
+          max-width: 540px;
         }
 
-        .hero-bio strong {
-          color: var(--text-primary);
-          font-weight: 500;
-        }
-
-        .hero-pitch {
-          display: none; /* Merging into bio for minimalism */
-        }
-
-        .hero-actions {
+        .hero-actions-row {
           display: flex;
+          align-items: center;
           gap: 1rem;
+          flex-wrap: wrap;
         }
 
-        /* Profile Image */
-        .hero-visual {
-          display: flex;
-          justify-content: center;
+        .btn-hero {
+          padding: 0.95rem 1.85rem;
+          font-size: 1rem;
         }
 
-        .profile-image-container {
-          width: 280px;
-          height: 280px;
+        /* Portrait Frame */
+        .portrait-frame {
           position: relative;
-          border-radius: 50%;
-          overflow: hidden;
-          border: 2px solid var(--accent-primary);
-          box-shadow: 0 0 40px -10px var(--accent-glow);
+          background: #ffffff;
+          border: 1px solid var(--border-light);
+          padding: 1rem;
+          border-radius: var(--radius-md);
+          box-shadow: 0 20px 45px -15px rgba(20, 21, 24, 0.08);
+          max-width: 420px;
+          margin: 0 auto;
         }
 
-        .profile-img {
+        .image-wrapper {
+          position: relative;
+          width: 100%;
+          height: 460px;
+          border-radius: var(--radius-xs);
+          overflow: hidden;
+          background: #ece7dc;
+        }
+
+        .portrait-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.5s ease;
+          filter: grayscale(12%) contrast(102%);
+          transition: filter 0.3s ease, transform 0.4s ease;
         }
 
-        .profile-image-container:hover .profile-img {
-          transform: scale(1.05);
+        .portrait-frame:hover .portrait-img {
+          filter: grayscale(0%) contrast(100%);
+          transform: scale(1.02);
         }
 
-        .img-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, transparent 80%, rgba(3, 7, 18, 0.6));
-          pointer-events: none;
+        .portrait-caption {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          margin-top: 0.85rem;
+          padding-top: 0.65rem;
+          border-top: 1px solid var(--border-subtle);
         }
 
-        @keyframes pulse {
-          0% { opacity: 0.5; }
-          50% { opacity: 1; }
-          100% { opacity: 0.5; }
+        .caption-name {
+          font-family: var(--font-serif);
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: var(--text-primary);
         }
 
-        @media (max-width: 900px) {
+        .caption-detail {
+          font-size: 0.8125rem;
+          color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
           .hero-container {
             grid-template-columns: 1fr;
-            text-align: center;
+            gap: 3.5rem;
           }
-          
-          .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            order: 2;
+          .portrait-frame {
+            max-width: 380px;
+            margin: 0;
           }
+          .image-wrapper {
+            height: 400px;
+          }
+        }
 
-          .hero-visual {
-            order: 1;
-            margin-bottom: 2rem;
+        @media (max-width: 600px) {
+          .hero-section {
+            padding: 3.5rem 0 4.5rem;
           }
-          
-          .profile-image-container {
-              width: 200px;
-              height: 200px;
+          .hero-actions-row {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .hero-actions-row .btn {
+            width: 100%;
+          }
+          .image-wrapper {
+            height: 340px;
           }
         }
       `}</style>
     </section>
   );
-};
-
-export default Hero;
+}

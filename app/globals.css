@@ -1,210 +1,388 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* Professional Minimal Tech Theme */
 :root {
-  /* Refining to a Deep Slate/Navy background - Easy on eyes, High-end feel */
-  --bg-primary: #0a0b0e;
-  --bg-secondary: #12141c;
-  --bg-tertiary: #1a1d26;
+  /* Core Palette */
+  --bg-page: #fbfaf7;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f3efe8;
+  --bg-muted: #ece6da;
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #64748b;
+  /* Dark Section Contrast (Deep Obsidian) */
+  --bg-dark: #111216;
+  --bg-dark-surface: #181920;
+  --bg-dark-subtle: #21232c;
+  --text-dark-primary: #f7f6f2;
+  --text-dark-secondary: #a3a7b6;
+  --text-dark-muted: #6c7182;
+  --border-dark: rgba(255, 255, 255, 0.1);
+  --border-dark-subtle: rgba(255, 255, 255, 0.06);
 
-  --accent-primary: #38bdf8;
-  /* Clean Sky Blue - Professional Techie */
-  --accent-secondary: #0ea5e9;
-  --accent-glow: rgba(56, 189, 248, 0.1);
+  /* Light Section Typography */
+  --text-primary: #121316;
+  --text-secondary: #565965;
+  --text-muted: #888d9a;
 
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-secondary: rgba(255, 255, 255, 0.04);
-  --border-subtle: rgba(255, 255, 255, 0.02);
+  /* Signature Accent: Warm Orange-Red */
+  --accent: #e24a27;
+  --accent-hover: #c93b1a;
+  --accent-subtle: rgba(226, 74, 39, 0.08);
+  --accent-border: rgba(226, 74, 39, 0.25);
 
-  --card-bg: rgba(18, 20, 28, 0.8);
-  --code-bg: #050608;
+  /* Restrained Green (Availability) */
+  --green: #15803d;
+  --green-subtle: rgba(21, 128, 61, 0.12);
 
-  --font-inter: var(--font-inter);
-  --font-serif: var(--font-playfair);
-  --font-body: var(--font-lora);
-  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --max-width: 1200px;
+  /* Hairline Borders */
+  --border-light: #e8e3d8;
+  --border-subtle: #efeae0;
+  --border-strong: #d2cbbe;
+
+  /* Typography */
+  --font-serif: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+
+  /* Geometry & Sizing */
+  --max-width: 1320px;
+  --header-height: 72px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 }
 
-* {
+/* ==========================================================================
+   RESET & BASE STYLING (Zero Browser-Default Styling)
+   ========================================================================== */
+*, *::before, *::after {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
-  font-size: 15px;
+  font-size: 16px;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.65;
+  font-size: 1.0625rem; /* 17px base */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-
-  /* Very subtle tech grain/texture */
-  background-image:
-    radial-gradient(circle at 50% -20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
-  background-attachment: fixed;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Explicit Reset of all interactive HTML elements (No default blue/underlines) */
+a {
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   LAYOUT CONTAINERS & SECTION PADDING
+   ========================================================================== */
 .container {
+  width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 3.5rem;
   }
+}
 
+.section-pad {
+  padding: 6.5rem 0;
+}
+
+@media (max-width: 768px) {
   .section-pad {
-    padding: 5rem 0;
+    padding: 4.25rem 0;
   }
 }
 
-/* Hide side-labels on very small screens or handle them globally */
-@media (max-width: 1024px) {
-  .side-label {
-    writing-mode: horizontal-tb !important;
-    transform: none !important;
-    position: relative !important;
-    top: 0 !important;
-    padding-top: 0 !important;
-    margin-bottom: 2rem !important;
-    opacity: 0.8 !important;
-    font-size: 0.9rem !important;
-    display: block !important;
-  }
-
-  .project-section-container,
-  .skills-section-container,
-  .contact-section-container,
-  .experience-container {
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
-}
-
-/* Base Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  letter-spacing: -0.02em;
+/* ==========================================================================
+   TYPOGRAPHIC UTILITIES
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
-h1 {
-  font-size: 3rem;
+.font-serif {
+  font-family: var(--font-serif);
 }
 
-h2 {
-  font-size: 2.25rem;
+.font-sans {
+  font-family: var(--font-sans);
 }
 
-h3 {
-  font-size: 1.5rem;
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.serif-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
 }
 
 p {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.7;
 }
 
-/* Universal Monospace Label */
-.mono {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent-primary);
-  opacity: 0.9;
+/* Section Header Editorial Standards */
+.section-header-editorial {
+  margin-bottom: 3.5rem;
+  max-width: 720px;
 }
 
-/* Minimalist Tech Buttons */
-.btn-primary {
-  background: var(--accent-primary);
-  color: #000;
-  padding: 0.8rem 1.6rem;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 0.9rem;
+.section-kicker {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.85rem;
+}
+
+.section-heading-large {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.025em;
+}
+
+.section-description {
+  font-size: 1.1875rem; /* 19px */
+  color: var(--text-secondary);
+  max-width: 680px;
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   BUTTONS & ACTIONS (High-End Tactile Styling)
+   ========================================================================== */
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.85rem 1.65rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #ffffff !important;
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(226, 74, 39, 0.25);
+}
+
+.btn-accent:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(226, 74, 39, 0.35);
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-page) !important;
+  border-color: var(--text-primary);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -5px var(--accent-glow);
-  background: #7dd3fc;
+  background: #252830;
+  border-color: #252830;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  padding: 0.8rem 1.6rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  color: var(--text-primary) !important;
+  border-color: var(--border-strong);
 }
 
 .btn-outline:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  background: rgba(56, 189, 248, 0.05);
+  background: var(--bg-subtle);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
-/* Techie Section Header */
-.section-header {
-  margin-bottom: 4rem;
+.btn-outline-dark {
+  background: transparent;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-.section-pad {
-  padding: 8rem 0;
+.btn-outline-dark:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-link {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 0;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--text-primary);
+  padding-bottom: 2px;
+  border-radius: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ==========================================================================
+   STATUS & BADGES
+   ========================================================================== */
+.availability-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.status-dot-green {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-block;
+  box-shadow: 0 0 0 3px var(--green-subtle);
+}
+
+/* ==========================================================================
+   DARK SECTION SYSTEM (Strategic High Contrast)
+   ========================================================================== */
+.section-dark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark-primary);
+}
+
+.section-dark h1,
+.section-dark h2,
+.section-dark h3,
+.section-dark h4 {
+  color: var(--text-dark-primary);
+}
+
+.section-dark p {
+  color: var(--text-dark-secondary);
+}
+
+.section-dark .section-kicker {
+  color: #f97354;
+}
+
+.section-dark .section-heading-large {
+  color: var(--text-dark-primary);
+}
+
+/* Focus Accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 10px;
+  background: #d5cebf;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
+  background: #b7ad9b;
 }
 
 ::selection {
-  background: var(--accent-primary);
-  color: #000;
+  background: #fedcd2;
+  color: #121316;
 }

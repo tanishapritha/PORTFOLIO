@@ -2,6 +2,7 @@ export interface Project {
     id: string;
     title: string;
     type: string;
+    image: string;
     tech: string[];
     desc: string;
     story: {
@@ -24,6 +25,7 @@ export const projects: Project[] = [
         id: "real-estate-agent",
         title: "RealEstate AI Sales OS",
         type: "AI Workflow Platform / PropTech",
+        image: "/projects/real-estate-agent/real-estate-agent.png",
         tech: ["LangGraph", "FastAPI", "LiteLLM", "MCP", "PostgreSQL", "Redis Streams", "Celery", "Pydantic v2", "NeMo Guardrails", "DeepEval", "OpenTelemetry", "Streamlit"],
         desc: "Stateful multi-agent workflow engine that orchestrates the real estate sales lifecycle through a directed graph with checkpoint-based persistence, MCP tool abstraction, and human-in-the-loop interrupts.",
         story: {
@@ -113,6 +115,7 @@ Results are exposed in the Streamlit dashboard's Insights tab and linked to Lang
         id: "threadbase",
         title: "ThreadBase",
         type: "AI Engineering / Content Infrastructure",
+        image: "/projects/threadbase/threadbase.png",
         tech: ["FastAPI", "PostgreSQL", "Redis", "Supabase", "Clerk"],
         desc: "LLM-powered content scheduling platform with async job orchestration, idempotent scheduling, and full audit trail observability.",
         story: {
@@ -238,6 +241,7 @@ def get_signed_url(bucket: str, path: str, expires_in: int = 3600):
         id: "company-legal-audit",
         title: "AI Compliance Audit Engine",
         type: "Multi-Agent AI / LegalTech",
+        image: "/projects/company-legal-audit/company-legal-audit.png",
         tech: ["FastAPI", "PostgreSQL", "pgvector", "GPT-4", "Docker", "Next.js"],
         desc: "Automating legal compliance audits for the Indian DPDP Act 2023 using a high-fidelity multi-agent AI system.",
         story: {
@@ -371,6 +375,7 @@ Production AI is 20% prompts, 80% systems engineering.
         id: "spec-os",
         title: "SpecOS",
         type: "AI Infrastructure / DevTools",
+        image: "/projects/spec-os/spec-os.png",
         tech: ["Next.js 15", "FastAPI", "Groq", "Llama 3.3", "SQLite", "GitHub API"],
         desc: "A development platform that synchronizes architectural specifications with production code through automated GitHub integration.",
         story: {
@@ -434,6 +439,7 @@ To ensure a responsive user experience, generation times must be minimal.
         id: "inbound-lead-engine",
         title: "Inbound Lead Engine",
         type: "Backend / AI Engineering",
+        image: "/projects/inbound-lead-engine/inbound-lead-engine.png",
         tech: ["FastAPI", "Redis", "PostgreSQL", "OpenRouter", "React", "Docker"],
         desc: "Production-grade async lead processing with AI intent inference and SLA enforcement.",
         story: {
@@ -469,6 +475,7 @@ Core challenge: AI reliability. Implemented 'Guarded AI' pattern—pydantic-vali
         id: "local-rag-chroma",
         title: "Privacy-First Local RAG",
         type: "Local AI / Infrastructure",
+        image: "/projects/local-rag-chroma/local-rag-chroma.png",
         tech: ["FastAPI", "ChromaDB", "Ollama", "PyPDF", "Tesseract"],
         desc: "An all-offline document intelligence system with OCR support and semantic retrieval for sensitive data sovereignty.",
         story: {
@@ -556,6 +563,7 @@ collection = client.get_or_create_collection(name="local_knowledge_base")
         id: "return-risk-predictor",
         title: "Return Risk Predictor",
         type: "ML Experiment / E-Commerce",
+        image: "/projects/return-risk-predictor/return-risk-predictor.png",
         tech: ["Python", "XGBoost", "TextBlob", "Streamlit", "Plotly"],
         desc: "Comparative study on predicting e-commerce returns using sentiment analysis and delivery metadata.",
         story: {
@@ -585,7 +593,7 @@ Standard review analysis misses a key signal: how others perceive the review. Hi
 **Model Breakthrough: XGBoost**
 Capture non-linear interactions between delivery delays and review polarity. Logistic Regression failed here, but XGBoost achieved a peak AUC of 0.89.
 
-### Low Risk Validation
+### Low Risk Baseline
 
 ![Low Risk Baseline](/projects/return-risk-predictor/low_risk.png)
 
@@ -604,6 +612,7 @@ Validated the model against 'Happy Path' deliveries—identifying customers who 
         id: "meet-me",
         title: "MeetMe",
         type: "GenAI / Productivity",
+        image: "/projects/meet-me/meet-me.png",
         tech: ["Next.js 14", "Gemini", "Deepgram", "Dexie.js", "Framer Motion"],
         desc: "Enterprise meeting intelligence with real-time transcription and local-first privacy-centric RAG.",
         story: {
@@ -639,6 +648,7 @@ By monitoring transcription streams, the system proactively fetches documents re
         id: "invoice-compliance",
         title: "GST Compliance Copilot",
         type: "Enterprise RAG / Fintech",
+        image: "/projects/invoice-compliance/invoice-compliance.png",
         tech: ["FastAPI", "LlamaIndex", "GPT-4 Turbo", "BM25", "Vercel"],
         desc: "Failure-aware RAG system for Indian GST compliance where 'I don't know' is a first-class feature.",
         story: {
