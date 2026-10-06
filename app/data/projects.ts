@@ -752,7 +752,9 @@ By monitoring transcription streams, the system proactively fetches documents re
         },
         hasImage: true
     },
-];\n\nexport const otherWork = [
+];
+
+export const otherWork = [
     {
         title: "More Coming Soon",
         category: "LAB",
