@@ -33,9 +33,9 @@ export default function Hero() {
               <ArrowRight size={16} />
             </Link>
 
-            <Link href="/work" className="btn btn-outline btn-hero">
-              <span>See my work</span>
-            </Link>
+            <a href={siteConfig.socials.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-hero">
+              <span>GitHub</span>
+            </a>
           </div>
         </div>
 
