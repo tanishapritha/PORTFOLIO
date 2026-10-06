@@ -5,24 +5,24 @@ import { Cpu, Globe, Server, Terminal } from 'lucide-react';
 const Skills = () => {
   const categories = [
     {
-      label: "GenAI & LLMs",
+      label: "LLM & Agentic AI",
       icon: <Cpu size={16} />,
-      skills: ["Transformers", "RAG Pipelines", "LangChain", "PyTorch", "HuggingFace", "LoRA/PEFT", "Vector DBs (Pinecone/Chroma)", "Prompt Engineering", "Ollama"]
+      skills: ["RAG", "Google ADK", "LangGraph", "MCP", "LLM Applications", "Tool Calling", "Structured Outputs", "Gemini", "OpenRouter", "Ollama"]
     },
     {
-      label: "Full Stack Engineering",
+      label: "Backend & APIs",
       icon: <Globe size={16} />,
-      skills: ["Next.js 14", "React", "FastAPI", "TypeScript", "Tailwind CSS", "WebSockets"]
+      skills: ["FastAPI", "Django", "REST APIs", "Async Python", "TypeScript", "React", "Next.js", "Pydantic"]
     },
     {
-      label: "Backend & Systems",
+      label: "AI Engineering",
       icon: <Server size={16} />,
-      skills: ["Python (AsyncIO)", "PostgreSQL", "Redis", "JWT / Security", "System Design", "Microservices", "REST/GraphQL", "Testing (Pytest/Jest)"]
+      skills: ["PostgreSQL", "Redis", "SQLite", "Docker", "API Integration", "System Design", "Testing (Pytest)", "Git/GitHub"]
     },
     {
-      label: "DevOps & Core",
+      label: "AI Infrastructure & Tools",
       icon: <Terminal size={16} />,
-      skills: ["Docker", "CI/CD (GitHub Actions)", "AWS", "DSA (C++)", "Git Flow", "Linux"]
+      skills: ["Langfuse", "LangSmith", "AI Evaluation", "LLM Observability", "OCR", "LlamaParse", "Voice AI", "Linux"]
     }
   ];
 
