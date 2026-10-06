@@ -18,13 +18,13 @@ export default function AboutSection() {
 
             <div className="about-body-text">
               <p>
-                I build AI systems, software products, backend infrastructure, and workflow automations. I enjoy working on problems where the solution isn&apos;t obvious and the software needs to fit how people actually work.
+                I build AI systems, software products, and backend infrastructure. I enjoy ambiguous problems where the challenge is not just getting a model to respond, but building the surrounding system reliably.
               </p>
               <p>
-                My background includes designing stateful multi-agent systems with LangGraph, building privacy-first local RAG pipelines with ChromaDB and Ollama, and engineering asynchronous queue architectures with FastAPI and Redis. Previously, as an AI Engineer Intern at AptlyHired, I developed multi-format document ingestion and OCR retrieval systems for internal enterprise testing.
+                My work spans agentic systems, RAG, document intelligence, voice AI, API integrations, and developer tooling. I primarily work in Python and like taking systems from research and rapid prototyping through integration, debugging, evaluation, and iteration.
               </p>
               <p>
-                I frequently build, test, and write about technical architectures online across the developer and AI ecosystems.
+                I build, test, and write about technical architectures across the AI and developer ecosystems, with a focus on practical systems rather than model demos.
               </p>
             </div>
 
@@ -87,7 +87,7 @@ export default function AboutSection() {
                 I can also help you find the people who need what you&apos;re building.
               </h3>
               <p className="discovery-desc">
-                Building the product is only half the battle. I spend significant time around startup and developer communities online, helping founders identify high-fit target companies, analyze pain points on Reddit and X, and assemble verified early-adopter lists.
+                I also spend time researching AI products, developer tools, startups, and technical communities to understand emerging problems and turn useful signals into buildable ideas.
               </p>
               <div className="discovery-tags">
                 <span className="editorial-tag">ICP Research</span>
@@ -104,7 +104,7 @@ export default function AboutSection() {
                 {siteConfig.email}
               </a>
               <span className="email-note">
-                I typically respond within 24 hours to project inquiries and build proposals.
+                Open to AI engineering, applied AI, agentic AI, FDE, and AI-focused software engineering opportunities.
               </span>
             </div>
           </div>
