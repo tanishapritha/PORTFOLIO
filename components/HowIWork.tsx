@@ -8,27 +8,27 @@ export default function HowIWork() {
     {
       num: "01",
       title: "Understand",
-      desc: "Understand the core problem, your current operational workflow, and what business outcome actually matters."
+      desc: "Understand the problem, constraints, available data, and what a successful system needs to accomplish."
     },
     {
       num: "02",
       title: "Design",
-      desc: "Determine what needs to be built, what tools to interface with, and whether AI is even necessary for the problem."
+      desc: "Research the right models, frameworks, tools, data sources, and system boundaries before committing to an architecture."
     },
     {
       num: "03",
       title: "Build",
-      desc: "Create the first working version quickly with clean, robust architecture and zero unnecessary complexity."
+      desc: "Build a small working prototype quickly, then add the infrastructure required for reliability rather than premature complexity."
     },
     {
       num: "04",
       title: "Integrate",
-      desc: "Connect the software directly to the spreadsheets, CRMs, chat apps, and databases your team already uses."
+      desc: "Integrate models with APIs, databases, tools, retrieval systems, and external services."
     },
     {
       num: "05",
       title: "Ship & Operate",
-      desc: "Deploy to production, configure automated retries and telemetry, and continuously improve based on real usage."
+      desc: "Evaluate outputs, trace failures, debug the system, and iterate until the workflow is reliable enough for real use."
     }
   ];
 
@@ -42,7 +42,7 @@ export default function HowIWork() {
             From problem to working system.
           </h2>
           <p className="section-description">
-            A disciplined, five-step approach focused on solving the core problem rather than chasing technology hype.
+            A practical engineering loop: research the problem, prototype quickly, evaluate the system, and improve what actually fails.
           </p>
         </div>
 
@@ -65,14 +65,14 @@ export default function HowIWork() {
           <div className="principle-content">
             <span className="principle-kicker mono">ENGINEERING PHILOSOPHY</span>
             <h4 className="principle-title serif-display">
-              Sometimes the right solution isn&apos;t AI.
+              Use AI where it adds leverage — keep deterministic parts deterministic.
             </h4>
             <p className="principle-text">
-              If a clean database query, a deterministic webhook, or a simple automated script solves your problem reliably without the cost and unpredictability of an LLM, that is exactly what I will build.
+              I prefer clear boundaries around LLMs: structured outputs, deterministic validation, explicit tool contracts, observability, and failure handling where they matter.
             </p>
           </div>
           <Link href="#contact" className="btn btn-accent principle-btn">
-            <span>Start a Project</span>
+            <span>View my work</span>
             <ArrowRight size={15} />
           </Link>
         </div>
