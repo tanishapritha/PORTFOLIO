@@ -670,7 +670,7 @@ By monitoring transcription streams, the system proactively fetches documents re
             live: "https://invoice-compliance-frontend.vercel.app/"
         },
         hasImage: true
-    }
+    },
     {
         id: "forge",
         title: "Forge — Coding Agent Runtime",
