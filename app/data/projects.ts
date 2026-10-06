@@ -671,9 +671,88 @@ By monitoring transcription streams, the system proactively fetches documents re
         },
         hasImage: true
     }
-];
-
-export const otherWork = [
+    {
+        id: "forge",
+        title: "Forge — Coding Agent Runtime",
+        type: "AI Infrastructure / Developer Tools",
+        image: "/projects/forge/forge.svg",
+        tech: ["Python", "FastAPI", "SQLite", "Next.js", "Git", "Agent Runtime"],
+        desc: "Persistent runtime for reliable AI coding agents with controlled tool execution, workspace policies, persistent state, verification, and execution trajectories.",
+        story: {
+            problem: "Coding agents need more than a model and a prompt. They need repository context, controlled access to tools, execution limits, persistent state, and a way to verify whether their changes actually work.",
+            solution: "Built Forge as a runtime underneath coding agents. The execution loop connects task context, model decisions, filesystem/shell/git/test tools, code changes, verification, and persistent trajectories while enforcing workspace and command policies.",
+            architecture: [
+                "Agent Runtime: Coordinates multi-step coding tasks from context retrieval through tool execution and verification.",
+                "Tool Registry + Policy Engine: Exposes filesystem, shell, git, test, and memory tools with workspace and command controls.",
+                "Persistent State: Stores repository-scoped memory in SQLite plus run state, events, and retrieved context.",
+                "Verification: Independently checks git diffs and test results rather than trusting the model's final response.",
+                "API + UI: FastAPI runtime with a Next.js interface for observing live execution trajectories."
+            ],
+            technicalDeepDive: "The runtime enforces command timeouts and iteration limits, persists each run under a reproducible run directory, and keeps a trajectory of agent actions and results. Cloud foundations include GitHub OAuth, GitHub App installation support, Neon/Postgres persistence, repository discovery, and per-task Git workspaces.",
+            impact: "A working foundation for reliable coding-agent execution, with explicit boundaries around tools, state, verification, and long-running agent tasks."
+        },
+        trendingKeywords: ["Agent-Runtime", "AI-Coding", "Developer-Tools"],
+        links: {
+            github: "https://github.com/tanishapritha/coding-harness",
+            live: "#"
+        },
+        hasImage: true
+    },
+    {
+        id: "procurement-intelligence",
+        title: "Procurement Intelligence AI",
+        type: "Document Intelligence / RAG",
+        image: "/projects/procurement-intelligence/procurement.svg",
+        tech: ["Python", "LlamaParse", "PostgreSQL", "pgvector", "ChromaDB", "OCR"],
+        desc: "Document intelligence pipeline for messy procurement data with parsing, OCR, structure-aware chunking, metadata enrichment, retrieval, and provenance.",
+        story: {
+            problem: "Procurement documents arrive in inconsistent formats and contain structure that generic text extraction can easily destroy: sections, clauses, tables, page boundaries, vendor context, and archive structure.",
+            solution: "Built a format-aware ingestion pipeline that validates inputs, routes supported formats to dedicated parsers, normalizes content into a canonical document model, enriches provenance metadata, and applies structure-aware chunking before vector storage.",
+            architecture: [
+                "Format Routing: Supports PDF, DOCX, XLSX, CSV, images, and ZIP archives with dedicated validation and parsing paths.",
+                "OCR + Parsing: LlamaParse handles PDF/image OCR and table extraction while native readers preserve structured Office and tabular data.",
+                "Canonical Model: Normalizes headings, paragraphs, lists, tables, and metadata into a consistent document representation.",
+                "Structure-Aware Chunking: Preserves sections, clauses, tables, vendor, document type, and page bounds.",
+                "Vector Layer: PostgreSQL + pgvector with ChromaDB as a fallback vector store."
+            ],
+            technicalDeepDive: "The ingestion layer includes safe ZIP inspection with a Zip-Slip path traversal shield, multi-encoding CSV detection, table-preserving chunking, and provenance carried from source file through normalized blocks and chunks.",
+            impact: "A reproducible document-processing foundation designed for traceable retrieval over heterogeneous procurement documents."
+        },
+        trendingKeywords: ["Document-AI", "RAG", "OCR"],
+        links: {
+            github: "https://github.com/tanishapritha/procurement-rag",
+            live: "#"
+        },
+        hasImage: true
+    },
+    {
+        id: "hackathon-intelligence",
+        title: "Hackathon Intelligence Agent",
+        type: "Agentic Research / AI Agents",
+        image: "/projects/hackathon-intelligence/hackathon.svg",
+        tech: ["Python", "Google ADK", "Gemini", "Tavily", "Agentic Research"],
+        desc: "Bounded, token-efficient agentic research system that plans targeted searches, executes cached research, compacts evidence, and synthesizes validated results.",
+        story: {
+            problem: "Open-ended research agents can waste tokens, repeat searches, and pass large amounts of raw web content between model calls. The challenge was to keep research flexible while bounding model work and preserving evidence quality.",
+            solution: "Built a two-stage architecture where an ADK planner creates 5–8 targeted research queries, Python executes cached searches and compacts evidence, and a second ADK agent synthesizes the requested output. Python then validates and ranks the result deterministically.",
+            architecture: [
+                "Stage 1 — Planning: ADK planner converts the request into a bounded set of targeted research queries.",
+                "Research Execution: Python performs search calls, caching results and compacting evidence before model synthesis.",
+                "Stage 2 — Synthesis: A second ADK agent receives the compacted evidence and produces the requested ideas.",
+                "Deterministic Validation: Python validates and ranks the generated results outside the model.",
+                "Testing: Project includes pytest coverage alongside live Gemini and Tavily integrations."
+            ],
+            technicalDeepDive: "The architecture deliberately keeps search execution and validation outside the model loop. This bounds the number of research queries, reduces repeated context, and makes the final validation step deterministic.",
+            impact: "A compact agentic research architecture designed around bounded tool use, evidence compaction, and deterministic post-processing."
+        },
+        trendingKeywords: ["Google-ADK", "Agentic-Research", "LLM-Systems"],
+        links: {
+            github: "https://github.com/tanishapritha/hackathon-agent",
+            live: "#"
+        },
+        hasImage: true
+    },
+];\n\nexport const otherWork = [
     {
         title: "More Coming Soon",
         category: "LAB",
