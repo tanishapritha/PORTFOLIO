@@ -12,7 +12,7 @@ export default function Hero() {
         {/* Left Column: Core Positioning & CTAs */}
         <div className="hero-left-col">
           <div className="hero-kicker-row">
-            <span className="section-kicker">AI + Software Builder</span>
+            <span className="section-kicker">AI ENGINEER</span>
             <div className="availability-pill">
               <span className="status-dot-green"></span>
               <span>{siteConfig.availability}</span>
@@ -20,16 +20,16 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-headline serif-display">
-            I turn business problems into <span className="serif-italic accent-text">working software.</span>
+            I build <span className="serif-italic accent-text">AI systems that actually work.</span>
           </h1>
 
           <p className="hero-subtext">
-            AI agents, apps, automation and intelligent systems built around how your business actually works.
+            Agentic workflows, LLM applications, RAG, voice AI, and backend infrastructure built from research to working systems.
           </p>
 
           <div className="hero-actions-row">
-            <Link href="/contact" className="btn btn-accent btn-hero">
-              <span>Tell me what you&apos;re building</span>
+            <Link href="/work" className="btn btn-accent btn-hero">
+              <span>See my work</span>
               <ArrowRight size={16} />
             </Link>
 
@@ -54,7 +54,7 @@ export default function Hero() {
             </div>
             <div className="portrait-caption">
               <span className="caption-name">Tanisha Pritha</span>
-              <span className="caption-detail">Systems, multi-agent graphs & AI engineering</span>
+              <span className="caption-detail">Agentic systems, LLM applications & AI engineering</span>
             </div>
           </div>
         </div>
