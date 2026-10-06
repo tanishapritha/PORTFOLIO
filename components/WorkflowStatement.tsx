@@ -17,14 +17,14 @@ export default function WorkflowStatement() {
     <section className="section-pad workflow-statement-section">
       <div className="container">
         <div className="workflow-statement-box">
-          <span className="section-kicker">Workflow Compatibility</span>
+          <span className="section-kicker">Systems Integration</span>
           
           <h2 className="statement-title serif-display">
-            Already have a workflow? <span className="serif-italic accent-text">You don&apos;t have to replace it.</span>
+            AI systems work best when they fit the software around them. <span className="serif-italic accent-text">Integrate, don&apos;t isolate.</span>
           </h2>
           
           <p className="statement-desc">
-            I can connect new intelligent software directly to the tools and spreadsheets your team already relies on every day.
+            I build AI workflows around existing APIs, databases, messaging systems, webhooks, and operational tools instead of treating the model as the whole product.
           </p>
 
           {/* Visual Tool Chips Row */}
@@ -42,7 +42,7 @@ export default function WorkflowStatement() {
 
           <div className="statement-cta-wrap">
             <Link href="/solutions/integrations" className="btn btn-outline">
-              <span>See how integrations work</span>
+              <span>See my work</span>
               <ArrowRight size={15} />
             </Link>
           </div>
