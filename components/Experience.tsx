@@ -9,6 +9,25 @@ const Experience = () => {
         <div className="side-label mono">EXPERIENCE</div>
         <div className="experience-content">
 
+          <div className="ent-card experience-card" style={{ marginBottom: "1.5rem" }}>
+            <div className="exp-header">
+              <div className="role-info">
+                <h4 className="role-title">AI Engineering Intern</h4>
+                <div className="company-info subtle">
+                  <span className="company">Nextlite</span>
+                  <span className="separator">•</span>
+                  <span className="location"><MapPin size={14} /> Remote</span>
+                </div>
+              </div>
+              <div className="exp-meta mono subtle"><Calendar size={14} /> 2026 – Present</div>
+            </div>
+            <ul className="exp-points">
+              <li>Working with the team building Vanify, a voice AI receptionist for businesses.</li>
+              <li>Contributing across conversational AI, LLM workflows, business context, APIs, and backend systems.</li>
+              <li>Prototyping and integrating AI workflows with a focus on reliable behavior and practical business use cases.</li>
+            </ul>
+          </div>
+
           <div className="ent-card experience-card">
             <div className="exp-header">
               <div className="role-info">
