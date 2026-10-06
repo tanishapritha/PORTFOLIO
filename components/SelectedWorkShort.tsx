@@ -6,12 +6,12 @@ import { ArrowRight } from 'lucide-react';
 import { projects } from '@/app/data/projects';
 
 export default function SelectedWorkShort() {
+  const forge = projects.find(p => p.id === 'forge')!;
+  const procurement = projects.find(p => p.id === 'procurement-intelligence')!;
+  const hackathon = projects.find(p => p.id === 'hackathon-intelligence')!;
   const realEstate = projects.find(p => p.id === 'real-estate-agent')!;
-  const compliance = projects.find(p => p.id === 'company-legal-audit')!;
-  const threadbase = projects.find(p => p.id === 'threadbase')!;
-  const specos = projects.find(p => p.id === 'spec-os')!;
 
-  const showcase = [realEstate, compliance, threadbase, specos].filter(Boolean);
+  const showcase = [forge, procurement, hackathon, realEstate].filter(Boolean);
 
   return (
     <section id="work" className="section-pad section-dark selected-work-short-section">
@@ -24,7 +24,7 @@ export default function SelectedWorkShort() {
               Projects
             </h2>
             <p className="section-description text-dark-secondary">
-              Real systems, multi-agent state machines, and developer tooling built for production.
+              Agentic systems, retrieval pipelines, and AI infrastructure built around real engineering constraints.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export default function SelectedWorkShort() {
         {/* Mobile View All CTA */}
         <div className="mobile-work-btn-wrap">
           <Link href="/work" className="btn btn-accent" style={{ width: '100%' }}>
-            <span>View all 9 projects in archive</span>
+            <span>View all work</span>
             <ArrowRight size={15} />
           </Link>
         </div>
