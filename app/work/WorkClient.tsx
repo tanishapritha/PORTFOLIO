@@ -40,7 +40,7 @@ export default function WorkClient({ projects }: Props) {
     if (!matchesSearch) return false;
 
     if (filter === 'all') return true;
-    if (filter === 'agents') return proj.type.toLowerCase().includes('agent') || proj.tech.includes('LangGraph') || proj.id === 'real-estate-agent';
+    if (filter === 'agents') return proj.type.toLowerCase().includes('agent') || proj.type.toLowerCase().includes('voice ai') || proj.tech.includes('LiveKit') || proj.tech.includes('LangGraph') || proj.id === 'real-estate-agent';
     if (filter === 'rag') return proj.type.toLowerCase().includes('rag') || proj.id.includes('rag') || proj.id.includes('compliance') || proj.id.includes('meet-me');
     if (filter === 'async') return proj.type.toLowerCase().includes('backend') || proj.tech.includes('Redis') || proj.id.includes('lead') || proj.id.includes('threadbase');
     if (filter === 'devtools') return proj.type.toLowerCase().includes('devtools') || proj.tech.includes('Next.js') || proj.id.includes('spec-os');
