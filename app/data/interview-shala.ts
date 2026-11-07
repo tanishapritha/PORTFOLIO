@@ -19,7 +19,7 @@ export const interviewShala: Project = {
         "Silero VAD",
         "Alembic"
     ],
-    desc: "Voice-first AI interview preparation platform with role-specific preparation plans, authenticated practice sessions, real-time audio rooms, and a separately deployed conversational interviewer worker.",
+    desc: "Voice-first AI interview preparation platform with role-specific preparation plans, authenticated practice sessions, real-time audio rooms, and a separate conversational interviewer worker implementation.",
     story: {
         problem: "Interview preparation is often fragmented across generic question banks, static study plans, and mock interviews that provide little continuity. A useful system needs to connect a candidate's target role and preparation context to a real-time spoken practice session, while keeping identity, session ownership, and transcript records secure.",
         solution: "Built a mobile-first interview preparation product with a React and TypeScript frontend, FastAPI service, PostgreSQL data model, and Clerk-backed authentication. Candidates can create role-specific preparation plans, start an authenticated practice session, obtain a server-issued LiveKit participant token, and join a voice room. A separate LiveKit Agents worker connects speech recognition, LLM inference, text-to-speech, and voice activity detection, while private API endpoints persist worker-generated transcript turns.",
