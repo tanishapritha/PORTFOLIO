@@ -57,7 +57,7 @@ The application distinguishes a successful API build from a working end-to-end v
     trendingKeywords: ["Voice-AI", "LiveKit-Agents", "FastAPI", "Realtime-Systems"],
     links: {
         github: "https://github.com/tanishapritha/interview-shala",
-        live: "#"
+        live: "https://web-ten-phi-49.vercel.app/"
     },
     hasImage: true
 };
