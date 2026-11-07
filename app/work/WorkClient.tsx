@@ -60,7 +60,7 @@ export default function WorkClient({ projects }: Props) {
               Working Systems & Case Studies
             </h1>
             <p className="work-page-sub">
-              Projects act as evidence of capability. Explore complete system architectures, data flows, and technical deep-dives across 9 production-grade applications.
+              Projects act as evidence of capability. Explore system architectures, data flows, and technical deep-dives across AI engineering, voice systems, and full-stack applications.
             </p>
 
             {/* Filters & Search */}
