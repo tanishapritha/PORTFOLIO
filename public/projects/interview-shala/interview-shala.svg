@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" fill="none">
+  <rect width="1200" height="680" rx="28" fill="#F4F0E8"/>
+  <rect x="54" y="54" width="1092" height="572" rx="22" fill="#FBFAF7" stroke="#D8D0C3" stroke-width="2"/>
+  <text x="100" y="132" fill="#8D4B35" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="4">AI ENGINEERING / VOICE AI</text>
+  <text x="100" y="202" fill="#24231F" font-family="Georgia, serif" font-size="58" font-weight="700">Interview Shala</text>
+  <text x="100" y="246" fill="#6F6A60" font-family="Arial, sans-serif" font-size="22">Role-specific preparation, connected to real-time voice practice.</text>
+  <rect x="100" y="310" width="230" height="116" rx="14" fill="#F0E9DE" stroke="#CFC4B5"/>
+  <text x="124" y="350" fill="#8D4B35" font-family="Arial, sans-serif" font-size="15" font-weight="700">CANDIDATE CONTEXT</text>
+  <text x="124" y="386" fill="#24231F" font-family="Arial, sans-serif" font-size="21">Role + roadmap</text>
+  <path d="M330 368H420" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M408 356L420 368L408 380" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="420" y="310" width="230" height="116" rx="14" fill="#E8EEE8" stroke="#B9C8B9"/>
+  <text x="444" y="350" fill="#49654F" font-family="Arial, sans-serif" font-size="15" font-weight="700">FASTAPI + POSTGRES</text>
+  <text x="444" y="386" fill="#24231F" font-family="Arial, sans-serif" font-size="21">Session + state</text>
+  <path d="M650 368H740" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M728 356L740 368L728 380" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="740" y="310" width="306" height="116" rx="14" fill="#F4E8E2" stroke="#D7B8A9"/>
+  <text x="764" y="350" fill="#8D4B35" font-family="Arial, sans-serif" font-size="15" font-weight="700">LIVEKIT VOICE WORKER</text>
+  <text x="764" y="386" fill="#24231F" font-family="Arial, sans-serif" font-size="21">STT · LLM · TTS · VAD</text>
+  <path d="M893 426V482H575" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M587 470L575 482L587 494" stroke="#9A8E7D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="340" y="482" width="470" height="82" rx="14" fill="#24231F"/>
+  <text x="575" y="532" fill="#F4F0E8" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">Authenticated transcript persistence</text>
+  <text x="100" y="588" fill="#81796D" font-family="Arial, sans-serif" font-size="16">React · TypeScript · FastAPI · PostgreSQL · LiveKit · Deepgram · Cartesia</text>
+</svg>
