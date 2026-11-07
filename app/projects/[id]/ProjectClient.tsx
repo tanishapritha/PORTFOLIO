@@ -108,9 +108,29 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
                 </div>
               </section>
 
+              {/* Architecture: the system at a glance */}
+              <section className="architecture-overview-card">
+                <div className="card-top-kicker mono">02 // SYSTEM ARCHITECTURE</div>
+                <p className="section-intro">How the main components work together.</p>
+                <ol className="architecture-overview-list">
+                  {project.story.architecture.map((step, idx) => {
+                    const [label, ...details] = step.split(":");
+                    return (
+                      <li key={idx} className="architecture-overview-item">
+                        <span className="architecture-overview-number mono">{String(idx + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h3>{label}</h3>
+                          <p>{details.join(":").trim() || step}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </section>
+
               {/* Technical Deep Dive */}
               <section className="technical-deep-dive-card">
-                <div className="card-top-kicker mono">02 // TECHNICAL IMPLEMENTATION & ARCHITECTURE</div>
+                <div className="card-top-kicker mono">03 // ENGINEERING DECISIONS & IMPLEMENTATION</div>
                 <div className="markdown-render-area">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {project.story.technicalDeepDive}
@@ -118,27 +138,6 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
                 </div>
               </section>
 
-              {/* Contextual CTA */}
-              <section className="case-cta-banner">
-                <div className="cta-left">
-                  <span className="section-kicker">Need Something Similar?</span>
-                  <h3 className="cta-title serif-display">
-                    Have a similar workflow or system you want to build?
-                  </h3>
-                  <p className="cta-desc">
-                    I can design, implement, and integrate custom software tailored to your company&apos;s specific operations.
-                  </p>
-                </div>
-                <div className="cta-buttons">
-                  <Link 
-                    href={`/contact?problem=Build something similar to ${encodeURIComponent(project.title)}`} 
-                    className="btn btn-accent"
-                  >
-                    <span>Build Something Similar</span>
-                    <ArrowRight size={15} />
-                  </Link>
-                </div>
-              </section>
             </div>
 
             {/* Sidebar */}
@@ -150,18 +149,6 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
                     <span key={idx} className="editorial-tag">{t}</span>
                   ))}
                 </div>
-              </div>
-
-              <div className="sidebar-card">
-                <h3 className="sidebar-card-title mono">ARCHITECTURE HIGHLIGHTS</h3>
-                <ul className="arch-steps-list">
-                  {project.story.architecture.map((step, idx) => (
-                    <li key={idx} className="arch-step-li">
-                      <span className="step-num mono">0{idx + 1}</span>
-                      <span className="step-text">{step}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               <div className="sidebar-card">
@@ -278,7 +265,7 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
           object-fit: cover;
         }
 
-        .business-summary-card, .technical-deep-dive-card {
+        .business-summary-card, .architecture-overview-card, .technical-deep-dive-card {
           background: #ffffff;
           border: 1px solid var(--border-light);
           border-radius: var(--radius-md);
@@ -298,9 +285,52 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
         }
 
         .narrative-blocks {
-          display: flex;
-          flex-direction: column;
-          gap: 1.75rem;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1.5rem;
+        }
+
+        .section-intro {
+          color: var(--text-secondary);
+          margin-top: -0.5rem;
+        }
+
+        .architecture-overview-list {
+          list-style: none;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1rem;
+          counter-reset: architecture;
+        }
+
+        .architecture-overview-item {
+          display: grid;
+          grid-template-columns: 2rem minmax(0, 1fr);
+          gap: 0.85rem;
+          padding: 1.1rem;
+          background: #faf8f5;
+          border: 1px solid var(--border-light);
+          border-radius: var(--radius-sm);
+        }
+
+        .architecture-overview-number {
+          color: var(--accent);
+          font-weight: 700;
+          font-size: 0.8rem;
+          padding-top: 0.15rem;
+        }
+
+        .architecture-overview-item h3 {
+          color: var(--text-primary);
+          font-size: 0.98rem;
+          font-weight: 700;
+          margin-bottom: 0.4rem;
+        }
+
+        .architecture-overview-item p {
+          color: var(--text-secondary);
+          font-size: 0.9rem;
+          line-height: 1.6;
         }
 
         .block {
@@ -484,6 +514,9 @@ export default function ProjectClient({ id, project }: ProjectClientProps) {
           .title-actions-grid, .project-content-grid {
             grid-template-columns: 1fr;
             gap: 2rem;
+          }
+          .narrative-blocks, .architecture-overview-list {
+            grid-template-columns: 1fr;
           }
           .sidebar-col {
             position: static;
